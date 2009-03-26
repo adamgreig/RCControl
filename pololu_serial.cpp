@@ -5,6 +5,7 @@
 
 #include "pololu_serial.h"
 
+///Open the serial port
 PololuSerial::PololuSerial() {
     #if WINDOWS
     //Open the serial port
@@ -33,20 +34,28 @@ PololuSerial::PololuSerial() {
     #endif
 }
 
+///Close the serial port
 PololuSerial::~PololuSerial() {
     #if WINDOWS
+    //When we're all finished, clear up by closing the serial port
     CloseHandle(serial_port);
     #endif
 }
 
+///Send data over the serial port
 void PololuSerial::send_data(char* data, unsigned short int size) {
     #if WINDOWS
     return WriteFile(serial_port, data, (DWORD)size);
     #endif
+    
+    //To test, since I'm not currently on Windows, instead printf the
+    // data that would be sent so it can be redirected to a file and
+    // checked for correctness.
     unsigned short int i;
     for(i=0; i<size; i++) {
         printf("%c", data[i]);
     }
+    //The 0xFF acts as a separator if multiple commands are being outputted
     printf("%c", 0xff);
     return;
 }
