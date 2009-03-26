@@ -5,8 +5,18 @@
 
 #pragma once
 
+#define LINUX
+
 #ifdef WINDOWS
 #include <windows.h>
+#define POLOLUSERIAL_PORT "COM1"
+#elifdef LINUX
+#include <fcntl.h>
+#include <string.h>
+#include <errno.h>
+#include <termios.h>
+#include <unistd.h>
+#define POLOLUSERIAL_PORT "/dev/ttyS0"
 #endif
 
 #include <stdio.h>
@@ -22,5 +32,7 @@ class PololuSerial {
     private:
         #ifdef WINDOWS
         HANDLE serial_port;
+        #elifdef LINUX
+        int serial_port;
         #endif
 };

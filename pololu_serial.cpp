@@ -7,7 +7,7 @@
 
 ///Open the serial port
 PololuSerial::PololuSerial() {
-    #if WINDOWS
+    #ifdef WINDOWS
     //Open the serial port
     serial_port = CreateFile(POLOLUSERIAL_PORT, GENERIC_WRITE, 0, 0, OPEN_EXISTING, 0, 0);
     
@@ -31,21 +31,47 @@ PololuSerial::PololuSerial() {
     BuildCommDCB("baud=28800 parity=N data=8 stop=1", &dcb)
     
     return SetCommState(serial_port, &dcb);
+    
+    #elifdef LINUX
+    
+    //Open the serial port
+    serial_port = open(POLOLUSERIAL_PORT, O_RDWR | O_NOCTTY | O_NDELAY);
+    if( serial_port == -1 ) {
+        serial_port = NULL;
+        return false;
+    }
+    
+    fcntl(serial_port, F_SETFL, 0);
+    
+    //Yuck! Linux makes this a complete mess
+    struct termios port_settings;
+    cfsetispeed(port_settings, 28800);
+    cfsetospeed(port_settings, 28800);
+    port_settings.c_cflag &= ~PARENB;
+    port_settings.c_cflag &= ~CSTOPB;
+    port_settings.c_cflag &= ~CSIZE;
+    port_settings.c_cflag |= CS8;
+    tcsetattr(serial_port, TCSANOW, &port_settings);
+    
     #endif
 }
 
 ///Close the serial port
 PololuSerial::~PololuSerial() {
-    #if WINDOWS
+    #ifdef WINDOWS
     //When we're all finished, clear up by closing the serial port
     CloseHandle(serial_port);
+    #elifdef LINUX
+    close(serial_port);
     #endif
 }
 
 ///Send data over the serial port
 void PololuSerial::send_data(char* data, unsigned short int size) {
-    #if WINDOWS
+    #ifdef WINDOWS
     return WriteFile(serial_port, data, (DWORD)size);
+    #elifdef LINUX
+    return write(serial_port, data, size);
     #endif
     
     //To test, since I'm not currently on Windows, instead printf the
