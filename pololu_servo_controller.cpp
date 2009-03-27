@@ -10,7 +10,6 @@
 
 ///Constructor initialises the serial port
 PololuServoController::PololuServoController() {
-    serial = PololuSerial();
 }
 
 ///Set the servo configuration
@@ -19,7 +18,7 @@ PololuServoController::PololuServoController() {
 ///\param direction what direction large positions send the servo
 ///\param range what the position value is multiplied by
 void PololuServoController::config(unsigned short int servo, bool on, bool direction, unsigned short int range) {
-    
+
     //Send the servo configuration line
     char data[5];
     data[0] = 0x80;     //START
@@ -27,17 +26,17 @@ void PololuServoController::config(unsigned short int servo, bool on, bool direc
     data[2] = 0x00;     //Command: Set-Parameters
     data[3] = servo;    //Servo_Num: Current servo number
     data[4] = 0x00;     //Data
-    
+
     if(on)
         data[4] |= 0x40;
-    
+
     if(direction)
         data[4] |= 0x20;
-    
+
     data[4] |= 0x1F & range;
-    
+
     serial.send_data(data, 5);
-    
+
 }
 
 ///Set the speed this servo will go to a position with
@@ -49,7 +48,7 @@ void PololuServoController::set_speed(unsigned short int servo, unsigned short i
     data[2] = 0x01;
     data[3] = servo;
     data[4] = speed;
-    
+
     serial.send_data(data, 5);
 }
 
@@ -63,7 +62,7 @@ void PololuServoController::set_neutral(unsigned short int servo, unsigned short
     data[3] = servo;
     data[4] = 0x7F & (position >> 7);
     data[5] = 0x7F & position;
-    
+
     serial.send_data(data, 6);
 }
 
@@ -76,7 +75,7 @@ void PololuServoController::set_position_7(unsigned short int servo, unsigned sh
     data[2] = 0x02;
     data[3] = servo;
     data[4] = 0x7F & position;
-    
+
     serial.send_data(data, 5);
 }
 
@@ -91,7 +90,7 @@ void PololuServoController::set_position_8(unsigned short int servo, unsigned sh
     data[3] = servo;
     data[4] = 0x01 & (position >> 7);
     data[5] = 0x7F & (position);
-    
+
     serial.send_data(data, 6);
 }
 
@@ -105,6 +104,6 @@ void PololuServoController::set_position_abs(unsigned short int servo, unsigned 
     data[3] = servo;
     data[4] = 0x7F & (position >> 7);
     data[5] = 0x7F & position;
-    
+
     serial.send_data(data, 6);
 }

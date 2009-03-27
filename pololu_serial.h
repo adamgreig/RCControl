@@ -5,23 +5,21 @@
 
 #pragma once
 
-#define LINUX
+#define LINUX 1
 
-#ifdef WINDOWS
+#if WINDOWS
 #include <windows.h>
 #define POLOLUSERIAL_PORT "COM1"
-#elifdef LINUX
+#elif LINUX
 #include <fcntl.h>
 #include <string.h>
 #include <errno.h>
 #include <termios.h>
 #include <unistd.h>
-#define POLOLUSERIAL_PORT "/dev/ttyS0"
+#define POLOLUSERIAL_PORT "/dev/ttyUSB0"
 #endif
 
 #include <stdio.h>
-
-#define POLOLUSERIAL_PORT "COM1"
 
 ///Interface to a serial port. Re-implement for Linux when required.
 class PololuSerial {
@@ -30,9 +28,9 @@ class PololuSerial {
         ~PololuSerial();
         void send_data(char* data, unsigned short int size);
     private:
-        #ifdef WINDOWS
+        #if WINDOWS
         HANDLE serial_port;
-        #elifdef LINUX
+        #elif LINUX
         int serial_port;
         #endif
 };
