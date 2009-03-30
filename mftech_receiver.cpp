@@ -26,15 +26,12 @@ int MFTechReceiver::throttle() {
 	//steering and throttle, then return the required data.
 	//The data is -32767 to +32767 instead of 0 to 65535, so
 	//make it unto an unsigned int for consistency.
-	while( e != -1 ) {
-		read(joystick, &e, sizeof(struct js_event));
-		if( e != -1 ) {
-			if( e.type == 0x02 || e.type == 0x82 ) {
-				if( e.number == 0 ) {
-					steering_val = e.value + 32767;
-				} else if( e.number == 1 ) {
-					throttle_val = e.value + 32767;
-				}
+	while( read(joystick, &e, sizeof(struct js_event)) != -1 ) {
+		if( e.type == 0x02 || e.type == 0x82 ) {
+			if( e.number == 0 ) {
+				steering_val = e.value + 32767;
+			} else if( e.number == 1 ) {
+				throttle_val = e.value + 32767;
 			}
 		}
 	}
@@ -59,16 +56,12 @@ int MFTechReceiver::steering() {
 	//steering and throttle, then return the required data.
 	//The data is -32767 to +32767 instead of 0 to 65535, so
 	//make it unto an unsigned int for consistency.
-	read(joystick, &e, sizeof(struct js_event));
-	while( e != -1 ) {
-		read(joystick, &e, sizeof(struct js_event));
-		if( e != -1 ) {
-			if( e.type == 0x02 || e.type == 0x82 ) {
-				if( e.number == 0 ) {
-					steering_val = e.value + 32767;
-				} else if( e.number == 1 ) {
-					throttle_val = e.value + 32767;
-				}
+	while( read(joystick, &e, sizeof(struct js_event)) != -1 ) {
+		if( e.type == 0x02 || e.type == 0x82 ) {
+			if( e.number == 0 ) {
+				steering_val = e.value + 32767;
+			} else if( e.number == 1 ) {
+				throttle_val = e.value + 32767;
 			}
 		}
 	}
