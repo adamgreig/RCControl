@@ -1,6 +1,8 @@
 // RCControl.cpp : Defines the entry point for the console application.
 //
 
+#define WINDOWS 1
+
 #if WINDOWS
 #include "stdafx.h"
 #include <windows.h>
@@ -39,7 +41,11 @@ int _tmain(int argc, _TCHAR* argv[])
 		//Display and log data
 		char buf[256];
 		printf("%.5d\t%.5d\r", (int)steering, (int)throttle);
+#ifdef WINDOWS
 		sprintf_s(buf, "%d\t%d", (int)steering, (int)throttle);
+#elif LINUX
+		sprintf(buf, "%d\t%d", (int)steering, (int)throttle);
+#endif
 		log.log(buf);
 		//Wait 50ms
 		Sleep(50);

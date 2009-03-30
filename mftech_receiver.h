@@ -33,6 +33,6 @@ public:
 #if LINUX
 private:
 	int joystick;
-	int throttle, steering;
+	int throttle_val, steering_val;
 #endif
 };

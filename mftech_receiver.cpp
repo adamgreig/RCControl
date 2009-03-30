@@ -31,14 +31,14 @@ int MFTechReceiver::throttle() {
 		if( e != -1 ) {
 			if( e.type == 0x02 || e.type == 0x82 ) {
 				if( e.number == 0 ) {
-					steering = e.value + 32767;
+					steering_val = e.value + 32767;
 				} else if( e.number == 1 ) {
-					throttle = e.value + 32767;
+					throttle_val = e.value + 32767;
 				}
 			}
 		}
 	}
-	return throttle;
+	return throttle_val;
 #endif
 }
 
@@ -65,13 +65,13 @@ int MFTechReceiver::steering() {
 		if( e != -1 ) {
 			if( e.type == 0x02 || e.type == 0x82 ) {
 				if( e.number == 0 ) {
-					steering = e.value + 32767;
+					steering_val = e.value + 32767;
 				} else if( e.number == 1 ) {
-					throttle = e.value + 32767;
+					throttle_val = e.value + 32767;
 				}
 			}
 		}
 	}
-	return steering;
+	return steering_val;
 #endif
 }
