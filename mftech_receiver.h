@@ -15,10 +15,10 @@
 #include <unistd.h>
 #define JOYSTICK "/dev/input/js0"
 struct js_event {
-	u32 time;
-	s16 value;
-	u8 type;
-	u8 number;
+	__u32 time;
+	__s16 value;
+	__u8 type;
+	__u8 number;
 };
 #endif
 

@@ -11,8 +11,11 @@
 #include "mftech_receiver.h"
 #include "file_logger.h"
 
-
+#if WINDOWS
 int _tmain(int argc, _TCHAR* argv[])
+#elif LINUX
+int main(int argc, char* argv[])
+#endif
 {
 	printf("Initialising...\n");
     //Make a controller & receiver
@@ -41,14 +44,18 @@ int _tmain(int argc, _TCHAR* argv[])
 		//Display and log data
 		char buf[256];
 		printf("%.5d\t%.5d\r", (int)steering, (int)throttle);
-#ifdef WINDOWS
-		sprintf_s(buf, "%d\t%d", (int)steering, (int)throttle);
-#elif LINUX
-		sprintf(buf, "%d\t%d", (int)steering, (int)throttle);
-#endif
+		#if WINDOWS
+		sprintf_s(&buf, "%d\t%d", (int)steering, (int)throttle);
+		#elif LINUX
+		sprintf(&buf, "%d\t%d", (int)steering, (int)throttle);
+		#endif
 		log.log(buf);
 		//Wait 50ms
+		#if WINDOWS
 		Sleep(50);
+		#elif LINUX
+		usleep(50000);
+		#endif
 	}
 	return 0;
 }

@@ -5,11 +5,14 @@
 
 #pragma once
 
-
+#if WINDOWS
 #define WIN32_LEAN_AND_MEAN		// Exclude rarely-used stuff from Windows headers
-#include <stdio.h>
 #include <tchar.h>
+#elif LINUX
+#include <unistd.h>
+#endif
 
+#include <stdio.h>
 
 
 // TODO: reference additional headers your program requires here
