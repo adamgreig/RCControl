@@ -5,11 +5,11 @@
 
 #pragma once
 
-#define LINUX 1
+#define WINDOWS 1
 
 #if WINDOWS
 #include <windows.h>
-#define POLOLUSERIAL_PORT "COM1"
+#define POLOLUSERIAL_PORT "COM8"
 #elif LINUX
 #include <fcntl.h>
 #include <string.h>

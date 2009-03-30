@@ -9,11 +9,14 @@
 PololuSerial::PololuSerial() {
     #if WINDOWS
     //Open the serial port
-    serial_port = CreateFile(POLOLUSERIAL_PORT, GENERIC_WRITE, 0, 0, OPEN_EXISTING, 0, 0);
+	LPCSTR portname = "COM8";
+    serial_port = CreateFile(portname, GENERIC_READ|GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, NULL);
 
     //Check it opened successfully
     if( serial_port == INVALID_HANDLE_VALUE ) {
         serial_port = NULL;
+		DWORD err = GetLastError();
+		printf("Error opening serial port. Error %i.\n", err);
         return;
     }
 
@@ -23,20 +26,27 @@ PololuSerial::PololuSerial() {
     timeouts.ReadTotalTimeoutMultiplier  = 0;
     timeouts.WriteTotalTimeoutMultiplier = 0;
     timeouts.WriteTotalTimeoutConstant   = 0;
-    if(SetCommTimeouts(serial_port, &timeouts) == FALSE)
+	if(SetCommTimeouts(serial_port, &timeouts) == FALSE) {
+		printf("Error setting timeouts on serial port.\n");
         return;
+	}
 
     //Set port options
     DCB dcb;
-    BuildCommDCB("baud=28800 parity=N data=8 stop=1", &dcb)
+	FillMemory(&dcb, sizeof(dcb), 0);
+	dcb.DCBlength = sizeof(dcb);
+	BuildCommDCB((LPCSTR)"baud=9600 parity=N data=8 stop=1", &dcb);
 
-    SetCommState(serial_port, &dcb);
+    DWORD result = SetCommState(serial_port, &dcb);
+	if( !result ) {
+		printf("Error %i setting comm state.\n", GetLastError());
+	}
     return;
 
     #elif LINUX
 
     //Open the serial port
-    serial_port = open(POLOLUSERIAL_PORT, O_RDWR | O_NOCTTY | O_NDELAY);
+    serial_port = open(POLOLUSERIAL_PORT, O_RDONLY | O_NOCTTY | O_NDELAY);
     printf("Serial port opened: %i\n", serial_port);
     if( serial_port == -1 ) {
         serial_port = NULL;
@@ -81,7 +91,8 @@ PololuSerial::~PololuSerial() {
 ///Send data over the serial port
 void PololuSerial::send_data(char* data, unsigned short int size) {
     #if WINDOWS
-    WriteFile(serial_port, data, (DWORD)size);
+	DWORD written;
+    WriteFile(serial_port, data, (DWORD)size, &written, NULL);
     return;
     #elif LINUX
     write(serial_port, data, size);
