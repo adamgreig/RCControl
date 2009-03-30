@@ -3,6 +3,12 @@
 
 #if WINDOWS
 #include <windows.h>
+#elif LINUX
+#include <fcntl.h>
+#include <string.h>
+#include <errno.h>
+#include <termios.h>
+#include <unistd.h>
 #endif
 
 #include <ctime>

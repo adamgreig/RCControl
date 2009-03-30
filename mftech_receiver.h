@@ -8,6 +8,11 @@
 #include <mmsystem.h>
 #include <winbase.h>
 #elif LINUX
+#include <fcntl.h>
+#include <string.h>
+#include <errno.h>
+#include <termios.h>
+#include <unistd.h>
 #define JOYSTICK "/dev/input/js0"
 struct js_event {
 	u32 time;

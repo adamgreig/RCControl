@@ -28,7 +28,7 @@ int MFTechReceiver::throttle() {
 	//make it unto an unsigned int for consistency.
 	while( e != -1 ) {
 		read(joystick, &e, sizeof(struct js_event));
-		if( e != -1 ){
+		if( e != -1 ) {
 			if( e.type == 0x02 || e.type == 0x82 ) {
 				if( e.number == 0 ) {
 					steering = e.value + 32767;
@@ -62,7 +62,7 @@ int MFTechReceiver::steering() {
 	read(joystick, &e, sizeof(struct js_event));
 	while( e != -1 ) {
 		read(joystick, &e, sizeof(struct js_event));
-		if( e != -1 ){
+		if( e != -1 ) {
 			if( e.type == 0x02 || e.type == 0x82 ) {
 				if( e.number == 0 ) {
 					steering = e.value + 32767;
