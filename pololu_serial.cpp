@@ -96,20 +96,8 @@ void PololuSerial::send_data(char* data, unsigned short int size) {
     return;
     #elif LINUX
     write(serial_port, data, size);
-    //printf("About to write some stuff...");
-    //int n = write(serial_port, "HELLO THERE HOW ARE YOU TODAY", 29);
-    //printf("Wrote %i bytes.\n", n);
-    return;
+	return;
     #endif
 
-    //To test, since I'm not currently on Windows, instead printf the
-    // data that would be sent so it can be redirected to a file and
-    // checked for correctness.
-    unsigned short int i;
-    for(i=0; i<size; i++) {
-        printf("%c", data[i]);
-    }
-    //The 0xFF acts as a separator if multiple commands are being outputted
-    printf("%c", 0xff);
     return;
 }
