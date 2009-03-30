@@ -10,6 +10,7 @@
 #include <tchar.h>
 #elif LINUX
 #include <unistd.h>
+#include <types.h>
 #endif
 
 #include <stdio.h>

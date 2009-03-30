@@ -24,7 +24,11 @@ int main(int argc, char* argv[])
 	FileLogger log = FileLogger("log.txt");
 
 	//Wait a second for the serial device to initialise
+	#if WINDOWS
 	Sleep(1000);
+	#elif LINUX
+	usleep(1000000);
+	#endif
 	printf("Now relaying data.\n");
 	//Start acting as a middleman
 	for(;;) {
@@ -45,9 +49,9 @@ int main(int argc, char* argv[])
 		char buf[256];
 		printf("%.5d\t%.5d\r", (int)steering, (int)throttle);
 		#if WINDOWS
-		sprintf_s(&buf, "%d\t%d", (int)steering, (int)throttle);
+		sprintf_s(buf, "%d\t%d", (int)steering, (int)throttle);
 		#elif LINUX
-		sprintf(&buf, "%d\t%d", (int)steering, (int)throttle);
+		sprintf(buf, "%d\t%d", (int)steering, (int)throttle);
 		#endif
 		log.log(buf);
 		//Wait 50ms

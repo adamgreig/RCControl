@@ -29,23 +29,27 @@ FileLogger::~FileLogger() {
 ///Write data to the log file, prefixing it with a timestamp in milliseconds
 void FileLogger::log(char *data) {
 	char time[32];
-#if WINDOWS
+	#if WINDOWS
 	sprintf_s(time, "%d", clock());
-#elif LINUX
+	#elif LINUX
 	sprintf(time, "%d", clock());
-#endif
+	#endif
 	char buf[256];
 	char tab[2] = "\t";
 	char newline[3] = "\r\n";
 	memset(&buf, NULL, 256);
+	#if WINDOWS
+	strcpy_s(buf, time);
+	strcat_s(buf, tab);
+	strcat_s(buf, data);
+	strcat_s(buf, newline);
+	DWORD written;
+	WriteFile(file, buf, (DWORD)strlen(buf), &written, NULL);
+	#elif LINUX
 	strcpy(buf, time);
 	strcat(buf, tab);
 	strcat(buf, data);
 	strcat(buf, newline);
-#if WINDOWS
-	DWORD written;
-	WriteFile(file, buf, strlen(buf), &written, NULL);
-#elif LINUX
 	write(file, &buf, strlen(buf));
-#endif
+	#endif
 }
