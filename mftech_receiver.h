@@ -2,8 +2,9 @@
 
 #define WINDOWS 1
 
-#if WINDOWS
 #include "stdafx.h"
+
+#if WINDOWS
 #include <windows.h>
 #include <mmsystem.h>
 #include <winbase.h>
