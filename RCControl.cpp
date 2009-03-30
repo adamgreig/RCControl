@@ -1,8 +1,10 @@
 // RCControl.cpp : Defines the entry point for the console application.
 //
 
+#if WINDOWS
 #include "stdafx.h"
 #include <windows.h>
+#endif
 #include "pololu_servo_controller.h"
 #include "mftech_receiver.h"
 #include "file_logger.h"
