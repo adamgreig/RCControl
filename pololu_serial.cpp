@@ -46,7 +46,7 @@ PololuSerial::PololuSerial() {
     #elif LINUX
 
     //Open the serial port
-    serial_port = open(POLOLUSERIAL_PORT, O_RDONLY | O_NOCTTY | O_NDELAY);
+    serial_port = open(POLOLUSERIAL_PORT, O_WRONLY | O_NOCTTY | O_NDELAY);
     printf("Serial port opened: %i\n", serial_port);
     if( serial_port == -1 ) {
         serial_port = NULL;
