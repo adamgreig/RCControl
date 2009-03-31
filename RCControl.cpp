@@ -67,7 +67,6 @@ int main(int argc, char* argv[]) {
 
 /**
 \mainpage RCControl Documentation
-\section Program Flow
 At the time of writing, the code consists of four classes.
 
 Two are related to a Pololu Servo Controller: http://www.pololu.com/catalog/product/390
