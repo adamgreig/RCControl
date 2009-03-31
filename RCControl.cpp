@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
     PololuServoController controller = PololuServoController();
 	MFTechReceiver receiver = MFTechReceiver();
 	char logpath[32] = "log.txt";
-	FileLogger log = FileLogger("log.txt");
+	FileLogger log = FileLogger(logpath);
 
 	//Wait a second for the serial device to initialise
 	#if WINDOWS
