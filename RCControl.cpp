@@ -68,21 +68,16 @@ int main(int argc, char* argv[]) {
 /**
 \mainpage RCControl Documentation
 
-\paragraph intro
 At the time of writing, the code consists of four classes.
 
 \section pololu Pololu Controller
-\paragraph pololu1
 Two are related to a Pololu Servo Controller: http://www.pololu.com/catalog/product/390
 
-\paragraph pololu2
 This device simulates a serial port to the computer over USB, and has a straightforward
 protocol defined in http://www.pololu.com/file/0J35/usc01a_guide.pdf
 
-\paragraph pololu3
 It controls up to 16 servos connected directly to it, and requires an external power supply.
 
-\paragraph polol4
 PololuSerial is responsible for communicating with it over the serial port. It is not
 particularly protocol aware, but does set the port up with the correct settings for
 communication (8 data bits, 1 stop bit, no parity bit, no hardware flow control).
@@ -90,11 +85,9 @@ PololuServoController defines the Pololu API. Each method takes a servo number a
 the data to send. The class also instances PololuSerial for actually sending data.
 
 \section mftech MFTech Receiver
-\paragraph mftech1
 The third class, MFTechReceiver, is related to the MFTech R/C Receiver:
 http://www.mftech.de/usb-interface_en.htm#RC_USB-Interface_III
 
-\paragraph mftech2
 This device reads in data from a remote control transmitter (controller). It either
 connects to the transmitter by a buddy cable directly, or by connecting to an R/C
 receiver via the servo cables. The latter method is to be used on the car as this
@@ -106,13 +99,13 @@ on Linux which generates events whenever the joystick does anything. In both cas
 the class interface is the same.
 
 \section logger Logger
-\paragraph logger1
-The final class logs this data to a file. This is to be used with other sensors for
+The final class, FileLogger, logs this data to a file. This is to be used with other sensors for
 recording how a human driver controlled the car, with the aim of having the onboard
 computer eventually do the driving itself. Other data would also need to be logged but
 the same class should be useful, perhaps with some extension. Image data would be more
 complicated, while GPS/acceleration data should be straightforward to log.
 
-\auther Adam Greig
-\date March 2009
+Adam Greig
+
+March 2009
 */
