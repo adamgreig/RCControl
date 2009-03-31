@@ -21,7 +21,7 @@
   </div>
 </div>
 <div class="contents">
-<h1>PololuSerial Class Reference</h1><!-- doxytag: class="PololuSerial" -->Interface to a serial port. Re-implement for Linux when required.  
+<h1>PololuSerial Class Reference</h1><!-- doxytag: class="PololuSerial" -->Interfaces to a serial port.  
 <a href="#_details">More...</a>
 <p>
 <code>#include &lt;pololu_serial.h&gt;</code>
@@ -33,13 +33,18 @@
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPololuSerial.html#72a7d7e3419cbaf90f63b758a5aac8d8">PololuSerial</a> ()</td></tr>
 
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Open the serial port handler and do basic error checking.  <a href="#72a7d7e3419cbaf90f63b758a5aac8d8"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPololuSerial.html#81006889ed2d75a42ddb5bcfb2d6f168">~PololuSerial</a> ()</td></tr>
 
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Close the serial port handler.  <a href="#81006889ed2d75a42ddb5bcfb2d6f168"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPololuSerial.html#6b2d89ce82f5ce8231f7abb632b197be">send_data</a> (char *data, unsigned short int size)</td></tr>
 
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Send data over the open serial port.  <a href="#6b2d89ce82f5ce8231f7abb632b197be"></a><br></td></tr>
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
-Interface to a serial port. Re-implement for Linux when required. <hr><h2>Constructor &amp; Destructor Documentation</h2>
+Interfaces to a serial port. 
+<p>
+Holds a file descriptor/handler. <hr><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" name="72a7d7e3419cbaf90f63b758a5aac8d8"></a><!-- doxytag: member="PololuSerial::PololuSerial" ref="72a7d7e3419cbaf90f63b758a5aac8d8" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -56,7 +61,9 @@ Interface to a serial port. Re-implement for Linux when required. <hr><h2>Constr
 <div class="memdoc">
 
 <p>
-Open the serial port handler and do basic error checking. The serial port is opened, currently at 9600 baud (hardcoded). In both Windows and Linux the port is setup for 9600 baud with 8 data bits, no stop bit, no parity bit and no flow control. 
+Open the serial port handler and do basic error checking. 
+<p>
+The serial port is opened, currently at 9600 baud (hardcoded). In both Windows and Linux the port is setup for 9600 baud with 8 data bits, no stop bit, no parity bit and no flow control. 
 </div>
 </div><p>
 <a class="anchor" name="81006889ed2d75a42ddb5bcfb2d6f168"></a><!-- doxytag: member="PololuSerial::~PololuSerial" ref="81006889ed2d75a42ddb5bcfb2d6f168" args="()" -->
@@ -76,6 +83,8 @@ Open the serial port handler and do basic error checking. The serial port is ope
 
 <p>
 Close the serial port handler. 
+<p>
+
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
@@ -105,7 +114,9 @@ Close the serial port handler.
 <div class="memdoc">
 
 <p>
-Send data over the open serial port. <dl compact><dt><b>Parameters:</b></dt><dd>
+Send data over the open serial port. 
+<p>
+<dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>data</em>&nbsp;</td><td>A char array of data to send. Not null-terminated. </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>size</em>&nbsp;</td><td>The number of bytes to send from data. </td></tr>
@@ -117,7 +128,7 @@ Send data over the open serial port. <dl compact><dt><b>Parameters:</b></dt><dd>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li><a class="el" href="pololu__serial_8h.html">pololu_serial.h</a><li><a class="el" href="pololu__serial_8cpp.html">pololu_serial.cpp</a></ul>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Mar 31 11:39:20 2009 for RCControl by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue Mar 31 11:47:14 2009 for RCControl by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
 </body>

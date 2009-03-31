@@ -21,7 +21,10 @@
   </div>
 </div>
 <div class="contents">
-<h1>FileLogger Class Reference</h1><!-- doxytag: class="FileLogger" --><code>#include &lt;file_logger.h&gt;</code>
+<h1>FileLogger Class Reference</h1><!-- doxytag: class="FileLogger" -->Log a given string to the filename given at construction.  
+<a href="#_details">More...</a>
+<p>
+<code>#include &lt;file_logger.h&gt;</code>
 <p>
 
 <p>
@@ -30,13 +33,18 @@
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFileLogger.html#25b7a6856751b0903cc61a18480da5a0">FileLogger</a> (char *filename)</td></tr>
 
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Open a handle to the log file using given filename.  <a href="#25b7a6856751b0903cc61a18480da5a0"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFileLogger.html#b08af44f2de3fe1b51158132f9a399dd">~FileLogger</a> ()</td></tr>
 
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Close the file handler on destruction.  <a href="#b08af44f2de3fe1b51158132f9a399dd"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFileLogger.html#ea4ca16f06d31bb9e7151454ea779c2b">log</a> (char *data)</td></tr>
 
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Write a line to the log file, prefixing it with a timestamp in milliseconds.  <a href="#ea4ca16f06d31bb9e7151454ea779c2b"></a><br></td></tr>
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
-Log a given string to the filename given at construction. The string is logged with a timestamp obtained from clock() which should provide appropriate resolution on most C++ implementations, but may need adaptation for specific platforms. <hr><h2>Constructor &amp; Destructor Documentation</h2>
+Log a given string to the filename given at construction. 
+<p>
+The string is logged with a timestamp obtained from clock() which should provide appropriate resolution on most C++ implementations, but may need adaptation for specific platforms. <hr><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" name="25b7a6856751b0903cc61a18480da5a0"></a><!-- doxytag: member="FileLogger::FileLogger" ref="25b7a6856751b0903cc61a18480da5a0" args="(char *filename)" -->
 <div class="memitem">
 <div class="memproto">
@@ -54,7 +62,9 @@ Log a given string to the filename given at construction. The string is logged w
 <div class="memdoc">
 
 <p>
-Open a handle to the log file using given filename. <dl compact><dt><b>Parameters:</b></dt><dd>
+Open a handle to the log file using given filename. 
+<p>
+<dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>filename</em>&nbsp;</td><td>The file to write the log to. </td></tr>
   </table>
@@ -79,6 +89,8 @@ Open a handle to the log file using given filename. <dl compact><dt><b>Parameter
 
 <p>
 Close the file handler on destruction. 
+<p>
+
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
@@ -99,7 +111,9 @@ Close the file handler on destruction.
 <div class="memdoc">
 
 <p>
-Write a line to the log file, prefixing it with a timestamp in milliseconds. <dl compact><dt><b>Parameters:</b></dt><dd>
+Write a line to the log file, prefixing it with a timestamp in milliseconds. 
+<p>
+<dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>data</em>&nbsp;</td><td>The null-terminated string to write to the file. Max 256 bytes. </td></tr>
   </table>
@@ -110,7 +124,7 @@ Write a line to the log file, prefixing it with a timestamp in milliseconds. <dl
 <hr>The documentation for this class was generated from the following files:<ul>
 <li><a class="el" href="file__logger_8h.html">file_logger.h</a><li><a class="el" href="file__logger_8cpp.html">file_logger.cpp</a></ul>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Mar 31 11:39:20 2009 for RCControl by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue Mar 31 11:47:14 2009 for RCControl by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
 </body>
