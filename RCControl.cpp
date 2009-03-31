@@ -71,8 +71,10 @@ int main(int argc, char* argv[]) {
 At the time of writing, the code consists of four classes.
 
 Two are related to a Pololu Servo Controller: http://www.pololu.com/catalog/product/390
+
 This device simulates a serial port to the computer over USB, and has a straightforward
 protocol defined in http://www.pololu.com/file/0J35/usc01a_guide.pdf
+
 It controls up to 16 servos connected directly to it, and requires an external power supply.
 
 PololuSerial is responsible for communicating with it over the serial port. It is not
@@ -81,8 +83,9 @@ communication (8 data bits, 1 stop bit, no parity bit, no hardware flow control)
 PololuServoController defines the Pololu API. Each method takes a servo number and
 the data to send. The class also instances PololuSerial for actually sending data.
 
-The third class is related to the MFTech R/C Receiver:
+The third class, MFTechReceiver, is related to the MFTech R/C Receiver:
 http://www.mftech.de/usb-interface_en.htm#RC_USB-Interface_III
+
 This device reads in data from a remote control transmitter (controller). It either
 connects to the transmitter by a buddy cable directly, or by connecting to an R/C
 receiver via the servo cables. The latter method is to be used on the car as this
