@@ -137,7 +137,10 @@ Set the servo configuration, and send out the values over the serial port.
     <tr><td valign="top"></td><td valign="top"><em>range</em>&nbsp;</td><td>what The position value is multiplied by.</td></tr>
   </table>
 </dl>
-From the Pololu manual: * Bit 6 specifies whether a servo is on or not; a 1 turns the servo on, and a 0 (default) turns it off. * Bit 5 sets the direction the servo moves, which only applies to 7- and 8-bit position commands. If the bit is 0 (default), a larger position number causes the output pulse to get bigger; if the bit is 1, a larger position number will make the output pulse shorter. * Bits 0-4 set the range through which the servo moves in 7- and 8-bit commands. A larger value will give a larger range, and setting the range to 0 will make the servo always stay at neutral. Given the same range setting, an 8-bit command will move the servo through twice the range of a 7-bit command. The default range setting is 15, which will give approximately 180 degrees in 8-bit commands and 90 degrees in 7-bit commands. 
+From the Pololu manual:<p>
+* Bit 6 specifies whether a servo is on or not; a 1 turns the servo on, and a 0 (default) turns it off.<p>
+* Bit 5 sets the direction the servo moves, which only applies to 7- and 8-bit position commands. If the bit is 0 (default), a larger position number causes the output pulse to get bigger; if the bit is 1, a larger position number will make the output pulse shorter.<p>
+* Bits 0-4 set the range through which the servo moves in 7- and 8-bit commands. A larger value will give a larger range, and setting the range to 0 will make the servo always stay at neutral. Given the same range setting, an 8-bit command will move the servo through twice the range of a 7-bit command. The default range setting is 15, which will give approximately 180 degrees in 8-bit commands and 90 degrees in 7-bit commands. 
 </div>
 </div><p>
 <a class="anchor" name="452836edc810801d5173f2ffeca3b360"></a><!-- doxytag: member="PololuServoController::set_speed" ref="452836edc810801d5173f2ffeca3b360" args="(unsigned short int servo, unsigned short int speed=0)" -->
@@ -170,10 +173,11 @@ Set the speed this servo will go to a position with.
 <p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>speed</em>&nbsp;</td><td>How fast the servo rotates to that value, 0(fast) to 127(slow) From the Pololu manual: This command allows you to set the speed at which the servo moves. If the speed is set to 0 (default), the output pulse will instantly change to the set position. If the speed value is nonzero, the pulse changes gradually from the old position to the new position. With a speed of 1, the pulse width changes at 50 microseconds per second, up to a maximum speed of 6.35 ms per second with a speed setting of 127. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>speed</em>&nbsp;</td><td>How fast the servo rotates to that value, 0(fast) to 127(slow)</td></tr>
   </table>
 </dl>
-
+From the Pololu manual:<p>
+This command allows you to set the speed at which the servo moves. If the speed is set to 0 (default), the output pulse will instantly change to the set position. If the speed value is nonzero, the pulse changes gradually from the old position to the new position. With a speed of 1, the pulse width changes at 50 microseconds per second, up to a maximum speed of 6.35 ms per second with a speed setting of 127. 
 </div>
 </div><p>
 <a class="anchor" name="bda3a4ab93c10e6196cdc9272158911c"></a><!-- doxytag: member="PololuServoController::set_neutral" ref="bda3a4ab93c10e6196cdc9272158911c" args="(unsigned short int servo, unsigned short int position=3000)" -->
@@ -206,10 +210,11 @@ Set the neutral position of a servo.
 <p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>position</em>&nbsp;</td><td>The neutral position of the servo, default 3000ms From the Pololu manual: Setting neutral only applies to 7- and 8-bit commands. The neutral value sets the middle of a range, and corresponds to a 7-bit position value of 63.5 or an 8-bit position value of 127.5. The neutral position is an absolute position just like command 4, and setting the neutral position will move the servo to that position. The default value is 3000. It may be useful to change neutral if you change servos and need to calibrate your system, or if you cannot get your mechanical linkages to just the right lengths. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>position</em>&nbsp;</td><td>The neutral position of the servo, default 3000ms</td></tr>
   </table>
 </dl>
-
+From the Pololu manual:<p>
+Setting neutral only applies to 7- and 8-bit commands. The neutral value sets the middle of a range, and corresponds to a 7-bit position value of 63.5 or an 8-bit position value of 127.5. The neutral position is an absolute position just like command 4, and setting the neutral position will move the servo to that position. The default value is 3000. It may be useful to change neutral if you change servos and need to calibrate your system, or if you cannot get your mechanical linkages to just the right lengths. 
 </div>
 </div><p>
 <a class="anchor" name="66f8afcbe438edf7761fdfb478bfff58"></a><!-- doxytag: member="PololuServoController::set_position_7" ref="66f8afcbe438edf7761fdfb478bfff58" args="(unsigned short int servo, unsigned short int position)" -->
@@ -242,10 +247,11 @@ Set servo position, 7bit.
 <p>
 Only takes 5 bytes but has less range or precision. <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>position</em>&nbsp;</td><td>Multiplied by range and adjusted for neutral, 7-bit, at range=15 90deg From the Pololu manual: When this command is sent, the data value is multiplied by the range setting for the corresponding servo and adjusted for the neutral setting. This command can be useful in speeding up communications since only 5 total bytes are sent to set a position. Setting a servo position will automatically turn it on. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>position</em>&nbsp;</td><td>Multiplied by range and adjusted for neutral, 7-bit, at range 15 this gives 90 degrees of movement.</td></tr>
   </table>
 </dl>
-
+From the Pololu manual:<p>
+When this command is sent, the data value is multiplied by the range setting for the corresponding servo and adjusted for the neutral setting. This command can be useful in speeding up communications since only 5 total bytes are sent to set a position. Setting a servo position will automatically turn it on. 
 </div>
 </div><p>
 <a class="anchor" name="1120e1bdf583fe1d9ec938e415e4a049"></a><!-- doxytag: member="PololuServoController::set_position_8" ref="1120e1bdf583fe1d9ec938e415e4a049" args="(unsigned short int servo, unsigned short int position)" -->
@@ -278,10 +284,10 @@ Set servo position, 8bit.
 <p>
 Sends an extra byte of data but gives you more range or precision. <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>position</em>&nbsp;</td><td>Multiplied by range and adjusted for neutral, 8-bit, range=15 180deg From the Pololu manual: This command is just like the 7-bit version, except that two data bytes must be sent to transfer 8 bits. Bit 0 of data 1 contains the most significant bit (bit 7 of your position byte), and the lower bits of data 2 contain the lower seven bits of your position byte. (Bit 7 in data bytes sent over the serial line must always be 0.) </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>position</em>&nbsp;</td><td>Multiplied by range and adjusted for neutral, 8-bit, at range 15 this gives 180 degrees of movement From the Pololu manual:</td></tr>
   </table>
 </dl>
-
+This command is just like the 7-bit version, except that two data bytes must be sent to transfer 8 bits. Bit 0 of data 1 contains the most significant bit (bit 7 of your position byte), and the lower bits of data 2 contain the lower seven bits of your position byte. (Bit 7 in data bytes sent over the serial line must always be 0.) 
 </div>
 </div><p>
 <a class="anchor" name="ec634c6d52a7a598f5b71c90a00e0f50"></a><!-- doxytag: member="PololuServoController::set_position_abs" ref="ec634c6d52a7a598f5b71c90a00e0f50" args="(unsigned short int servo, unsigned short int position)" -->
@@ -314,10 +320,11 @@ Set the servo's position absolutely, without using range or neutral values.
 <p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>position</em>&nbsp;</td><td>The absolute position to go to, range 500 to 5500, corresponds to 250ms to 2750ms From the Pololu manual: This command allows direct control of the internal servo position variable. Neutral, range, and direction settings do not affect this command. Data 2 contains the lower 7 bits, and Data 1 contains the upper bits. The range of valid values is 500 through 5500. Setting a servo position will automatically turn it on. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>position</em>&nbsp;</td><td>The absolute position to go to, range 500 to 5500, corresponds to 250ms to 2750ms</td></tr>
   </table>
 </dl>
-
+From the Pololu manual:<p>
+This command allows direct control of the internal servo position variable. Neutral, range, and direction settings do not affect this command. Data 2 contains the lower 7 bits, and Data 1 contains the upper bits. The range of valid values is 500 through 5500. Setting a servo position will automatically turn it on. 
 </div>
 </div><p>
 <hr><h2>Member Data Documentation</h2>
@@ -339,7 +346,7 @@ Set the servo's position absolutely, without using range or neutral values.
 <hr>The documentation for this class was generated from the following files:<ul>
 <li><a class="el" href="pololu__servo__controller_8h.html">pololu_servo_controller.h</a><li><a class="el" href="pololu__servo__controller_8cpp.html">pololu_servo_controller.cpp</a></ul>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Mar 31 12:11:13 2009 for RCControl by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue Mar 31 12:14:16 2009 for RCControl by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
 </body>
