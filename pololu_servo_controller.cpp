@@ -14,13 +14,16 @@ PololuServoController::PololuServoController() {
 * \param range what The position value is multiplied by.
 *
 * From the Pololu manual:
+*
 *  *  Bit 6 specifies whether a servo  is on or not; a 1  turns  the 
 *  servo on, and a 0  (default)  turns  it off.
+*
 *  *  Bit 5  sets  the direction  the  servo moves, which only 
 *  applies  to 7- and 8-bit position commands.   If  the bit  is 0 
 *  (default), a  larger position number causes  the output 
 *  pulse  to  get  bigger;  if  the  bit  is  1,  a  larger  position 
 *  number will make  the output pulse  shorter.
+*
 *  *  Bits 0-4 set  the range  through which  the servo moves  in 
 *  7-  and  8-bit  commands.   A  larger  value will  give  a 
 *  larger range, and setting the range to 0 will make the 
@@ -54,7 +57,9 @@ void PololuServoController::config(unsigned short int servo, bool on, bool direc
 /**
 * Set the speed this servo will go to a position with
 * \param speed How fast the servo rotates to that value, 0(fast) to 127(slow)
+*
 * From the Pololu manual:
+*
 * This command allows you  to set  the speed at which  the servo moves.  If  the speed  is set 
 *  to 0 (default), the output pulse will instantly change to the set position.   If the speed 
 *  value  is nonzero,  the pulse changes gradually from  the old position  to  the new position.  
@@ -75,7 +80,9 @@ void PololuServoController::set_speed(unsigned short int servo, unsigned short i
 /**
 * Set the neutral position of a servo.
 * \param position The neutral position of the servo, default 3000ms
+*
 * From the Pololu manual:
+*
 * Setting neutral only applies  to 7- and 8-bit commands.   The neutral value sets  the 
 *  middle of a range, and corresponds to a 7-bit position value of 63.5 or an 8-bit position 
 *  value of 127.5. The neutral position is an absolute position just like command 4, and 
@@ -98,8 +105,10 @@ void PololuServoController::set_neutral(unsigned short int servo, unsigned short
 /**
 * Set servo position, 7bit.
 * Only takes 5 bytes but has less range or precision.
-* \param position Multiplied by range and adjusted for neutral, 7-bit, at range=15 90deg
+* \param position Multiplied by range and adjusted for neutral, 7-bit, at range 15 this gives 90 degrees of movement.
+*
 * From the Pololu manual:
+*
 * When this command is sent, the data value is multiplied by the range setting for the 
 *  corresponding servo and adjusted for the neutral setting.  This command can be useful 
 *  in  speeding up communications  since only 5  total bytes are  sent  to  set a position.   
@@ -119,8 +128,9 @@ void PololuServoController::set_position_7(unsigned short int servo, unsigned sh
 /**
 * Set servo position, 8bit.
 * Sends an extra byte of data but gives you more range or precision.
-* \param position Multiplied by range and adjusted for neutral, 8-bit, range=15 180deg
+* \param position Multiplied by range and adjusted for neutral, 8-bit, at range 15 this gives 180 degrees of movement
 * From the Pololu manual:
+*
 * This command is just like the 7-bit version, except that two data bytes must be sent to 
 *  transfer 8 bits.   Bit 0 of data 1 contains the most significant bit (bit 7 of your position 
 *  byte), and the lower bits of data 2 contain the lower seven bits of your position byte.   
@@ -141,7 +151,9 @@ void PololuServoController::set_position_8(unsigned short int servo, unsigned sh
 /**
 * Set the servo's position absolutely, without using range or neutral values.
 * \param position The absolute position to go to, range 500 to 5500, corresponds to 250ms to 2750ms
+*
 * From the Pololu manual:
+*
 * This command allows direct control of the internal servo position variable.   Neutral, 
 *  range, and direction settings do not affect this command.   Data 2 contains the lower 7 
 *  bits, and Data 1 contains  the upper bits.  The range of valid values  is 500  through 5500.  
