@@ -1,6 +1,9 @@
 #include "file_logger.h"
 
-///Open the log file handler
+/**
+* Open a handle to the log file using given filename.
+* \param filename The file to write the log to.
+*/
 FileLogger::FileLogger(char* filename) {
 	#if WINDOWS
 	file = CreateFile((LPCSTR)filename, GENERIC_WRITE, FILE_SHARE_WRITE, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -12,12 +15,19 @@ FileLogger::FileLogger(char* filename) {
 	}
 	#elif LINUX
 	file = open(filename, O_WRONLY | O_CREAT | O_TRUNC);
+	if( file == -1 ) {
+		printf( "Error opening file." );
+		file = NULL;
+		return;
+	}
 	printf("Log file opened.\n");
 	#endif
 
 }
 
-///Close the file handler
+/**
+* Close the file handler on destruction.
+*/
 FileLogger::~FileLogger() {
 	#if WINDOWS
 	CloseHandle(file);
@@ -26,15 +36,22 @@ FileLogger::~FileLogger() {
 	#endif
 }
 
-///Write data to the log file, prefixing it with a timestamp in milliseconds
+/**
+* Write a line to the log file, prefixing it with a timestamp in milliseconds.
+* \param data The null-terminated string to write to the file. Max 256 bytes.
+*/
 void FileLogger::log(char *data) {
+	if( strlen(data) > 255 ) {
+		printf("Error: input string too long to FileLogger::log.\n");
+		return;
+	}
 	char time[32];
 	#if WINDOWS
 	sprintf_s(time, "%d", clock());
 	#elif LINUX
 	sprintf(time, "%d", clock());
 	#endif
-	char buf[256];
+	char buf[293];
 	char tab[2] = "\t";
 	char newline[3] = "\r\n";
 	memset(&buf, NULL, 256);

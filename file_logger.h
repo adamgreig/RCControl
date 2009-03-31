@@ -1,19 +1,13 @@
 #pragma once
-
-#if WINDOWS
-#include <windows.h>
-#elif LINUX
-#include <fcntl.h>
-#include <string.h>
-#include <errno.h>
-#include <termios.h>
-#include <unistd.h>
-#endif
-
 #include <ctime>
-#include <stdio.h>
+#include "stdafx.h"
 
-///Log a string to a persistent log file
+/**
+* Log a given string to the filename given at construction.
+* The string is logged with a timestamp obtained from clock()
+* which should provide appropriate resolution on most C++
+* implementations, but may need adaptation for specific platforms.
+*/
 class FileLogger {
 public:
 	FileLogger(char* filename);

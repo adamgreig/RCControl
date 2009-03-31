@@ -1,16 +1,16 @@
-/**************************************
- * PololuSerial
- * Open and send data over a serial port
- **************************************/
-
 #include "pololu_serial.h"
 
-///Open the serial port
+/**
+* Open the serial port handler and do basic error checking.
+* The serial port is opened, currently at 9600 baud (hardcoded).
+* In both Windows and Linux the port is setup for 9600 baud with
+* 8 data bits, no stop bit, no parity bit and no flow control.
+*/
 PololuSerial::PololuSerial() {
     #if WINDOWS
     //Open the serial port
 	LPCSTR portname = "COM8";
-    serial_port = CreateFile(portname, GENERIC_READ|GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, NULL);
+    serial_port = CreateFile(portname, GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, NULL);
 
     //Check it opened successfully
     if( serial_port == INVALID_HANDLE_VALUE ) {
@@ -78,7 +78,9 @@ PololuSerial::PololuSerial() {
     #endif
 }
 
-///Close the serial port
+/**
+* Close the serial port handler.
+*/
 PololuSerial::~PololuSerial() {
     #if WINDOWS
     //When we're all finished, clear up by closing the serial port
@@ -88,14 +90,25 @@ PololuSerial::~PololuSerial() {
     #endif
 }
 
-///Send data over the serial port
+/**
+* Send data over the open serial port.
+* \param data A char array of data to send. Not null-terminated.
+* \param size The number of bytes to send from data.
+*/
 void PololuSerial::send_data(char* data, unsigned short int size) {
+	if( !serial_port ) {
+		printf("Error: Serial port not open.\n");
+		return;
+	}
     #if WINDOWS
 	DWORD written;
     WriteFile(serial_port, data, (DWORD)size, &written, NULL);
     return;
     #elif LINUX
-    write(serial_port, data, size);
+	if(write(serial_port, data, size) == -1) {
+		printf("Error writing to serial port.\n");
+		return;
+	}
 	return;
     #endif
 

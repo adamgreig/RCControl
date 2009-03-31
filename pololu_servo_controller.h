@@ -1,15 +1,12 @@
-/**************************************
- * PololuServoController
- * Represents the servo controller
- * board and holds the serial port
- * to interface with it
- **************************************/
-
 #pragma once
-
+#include "stdafx.h"
 #include "pololu_serial.h"
 
-///Control servos attached to a controller
+/**
+* Provides an interface to the Pololu servo controller.
+* Exposes each of the Pololu commands and sends that data
+* to the controller via a PololuSerial object.
+*/
 class PololuServoController {
     public:
         PololuServoController();
