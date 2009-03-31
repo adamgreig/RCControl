@@ -14,7 +14,7 @@ FileLogger::FileLogger(char* filename) {
 		return;
 	}
 	#elif LINUX
-	file = open(filename, O_WRONLY | O_CREAT | O_TRUNC);
+	file = open(filename, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP);
 	if( file == -1 ) {
 		printf( "Error opening file." );
 		file = NULL;
