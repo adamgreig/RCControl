@@ -20,8 +20,6 @@ struct js_event {
 };
 #endif
 
-#include <stdio.h>
-
 /**
 * Connect to an MFTech R/C receiver, represented on the system
 * as a joystick, and read in the X and Y axis values to be
