@@ -12,6 +12,7 @@ PololuServoController::PololuServoController() {
 * \param on whether The servo should be turned on.
 * \param direction What direction large positions send the servo.
 * \param range what The position value is multiplied by.
+*
 * From the Pololu manual:
 *  *  Bit 6 specifies whether a servo  is on or not; a 1  turns  the 
 *  servo on, and a 0  (default)  turns  it off.

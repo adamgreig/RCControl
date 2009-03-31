@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>RCControl: Main Page</title>
+<title>RCControl: RCControl Documentation</title>
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <link href="tabs.css" rel="stylesheet" type="text/css">
 </head><body>
@@ -17,8 +17,20 @@
 <div class="contents">
 <h1>RCControl Documentation</h1>
 <p>
-<h3 align="center">20090331 </h3></div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Mar 31 11:47:14 2009 for RCControl by&nbsp;
+<h3 align="center">20090331 </h3>At the time of writing, the code consists of four classes.<h2><a class="anchor" name="pololu">
+Pololu Controller</a></h2>
+Two are related to a Pololu Servo Controller: <a href="http://www.pololu.com/catalog/product/390">http://www.pololu.com/catalog/product/390</a><p>
+This device simulates a serial port to the computer over USB, and has a straightforward protocol defined in <a href="http://www.pololu.com/file/0J35/usc01a_guide.pdf">http://www.pololu.com/file/0J35/usc01a_guide.pdf</a><p>
+It controls up to 16 servos connected directly to it, and requires an external power supply.<p>
+<a class="el" href="classPololuSerial.html" title="Interfaces to a serial port.">PololuSerial</a> is responsible for communicating with it over the serial port. It is not particularly protocol aware, but does set the port up with the correct settings for communication (8 data bits, 1 stop bit, no parity bit, no hardware flow control). <a class="el" href="classPololuServoController.html" title="Provides an interface to the Pololu servo controller.">PololuServoController</a> defines the Pololu API. Each method takes a servo number and the data to send. The class also instances <a class="el" href="classPololuSerial.html" title="Interfaces to a serial port.">PololuSerial</a> for actually sending data.<h2><a class="anchor" name="mftech">
+MFTech Receiver</a></h2>
+The third class, <a class="el" href="classMFTechReceiver.html" title="Connect to an MFTech R/C receiver, represented on the system as a joystick, and read...">MFTechReceiver</a>, is related to the MFTech R/C Receiver: <a href="http://www.mftech.de/usb-interface_en.htm#RC_USB-Interface_III">http://www.mftech.de/usb-interface_en.htm#RC_USB-Interface_III</a><p>
+This device reads in data from a remote control transmitter (controller). It either connects to the transmitter by a buddy cable directly, or by connecting to an R/C receiver via the servo cables. The latter method is to be used on the car as this allows the transmitter to transmit normally over radio, then the receiver picks the signals up and sends the data on to the MFTech interface which the computer reads. It simulates a joystick to the computer, using the normal USB HID protocol. This is read as a joystick using some special Windows commands, or as a normal file handler on Linux which generates events whenever the joystick does anything. In both cases the class interface is the same.<h2><a class="anchor" name="logger">
+Logger</a></h2>
+The final class, <a class="el" href="classFileLogger.html" title="Log a given string to the filename given at construction.">FileLogger</a>, logs this data to a file. This is to be used with other sensors for recording how a human driver controlled the car, with the aim of having the onboard computer eventually do the driving itself. Other data would also need to be logged but the same class should be useful, perhaps with some extension. Image data would be more complicated, while GPS/acceleration data should be straightforward to log.<p>
+Adam Greig<p>
+March 2009 </div>
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue Mar 31 12:11:12 2009 for RCControl by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
 </body>

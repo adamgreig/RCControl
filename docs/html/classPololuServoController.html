@@ -134,10 +134,10 @@ Set the servo configuration, and send out the values over the serial port.
     <tr><td valign="top"></td><td valign="top"><em>servo</em>&nbsp;</td><td>The servo number to configure. </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>on</em>&nbsp;</td><td>whether The servo should be turned on. </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>direction</em>&nbsp;</td><td>What direction large positions send the servo. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>range</em>&nbsp;</td><td>what The position value is multiplied by. From the Pololu manual: * Bit 6 specifies whether a servo is on or not; a 1 turns the servo on, and a 0 (default) turns it off. * Bit 5 sets the direction the servo moves, which only applies to 7- and 8-bit position commands. If the bit is 0 (default), a larger position number causes the output pulse to get bigger; if the bit is 1, a larger position number will make the output pulse shorter. * Bits 0-4 set the range through which the servo moves in 7- and 8-bit commands. A larger value will give a larger range, and setting the range to 0 will make the servo always stay at neutral. Given the same range setting, an 8-bit command will move the servo through twice the range of a 7-bit command. The default range setting is 15, which will give approximately 180 degrees in 8-bit commands and 90 degrees in 7-bit commands. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>range</em>&nbsp;</td><td>what The position value is multiplied by.</td></tr>
   </table>
 </dl>
-
+From the Pololu manual: * Bit 6 specifies whether a servo is on or not; a 1 turns the servo on, and a 0 (default) turns it off. * Bit 5 sets the direction the servo moves, which only applies to 7- and 8-bit position commands. If the bit is 0 (default), a larger position number causes the output pulse to get bigger; if the bit is 1, a larger position number will make the output pulse shorter. * Bits 0-4 set the range through which the servo moves in 7- and 8-bit commands. A larger value will give a larger range, and setting the range to 0 will make the servo always stay at neutral. Given the same range setting, an 8-bit command will move the servo through twice the range of a 7-bit command. The default range setting is 15, which will give approximately 180 degrees in 8-bit commands and 90 degrees in 7-bit commands. 
 </div>
 </div><p>
 <a class="anchor" name="452836edc810801d5173f2ffeca3b360"></a><!-- doxytag: member="PololuServoController::set_speed" ref="452836edc810801d5173f2ffeca3b360" args="(unsigned short int servo, unsigned short int speed=0)" -->
@@ -339,7 +339,7 @@ Set the servo's position absolutely, without using range or neutral values.
 <hr>The documentation for this class was generated from the following files:<ul>
 <li><a class="el" href="pololu__servo__controller_8h.html">pololu_servo_controller.h</a><li><a class="el" href="pololu__servo__controller_8cpp.html">pololu_servo_controller.cpp</a></ul>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Mar 31 11:47:14 2009 for RCControl by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue Mar 31 12:11:13 2009 for RCControl by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
 </body>
