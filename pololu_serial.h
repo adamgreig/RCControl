@@ -5,8 +5,6 @@
 
 #pragma once
 
-#define WINDOWS 1
-
 #if WINDOWS
 #include <windows.h>
 #define POLOLUSERIAL_PORT "COM8"

@@ -1,7 +1,4 @@
 #pragma once
-
-#define WINDOWS 1
-
 #include "stdafx.h"
 
 #if WINDOWS

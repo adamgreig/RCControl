@@ -1,5 +1,4 @@
 #pragma once
-#define WINDOWS 1
 
 #if WINDOWS
 #include <windows.h>
@@ -15,8 +14,7 @@
 #include <stdio.h>
 
 ///Log a string to a persistent log file
-class FileLogger
-{
+class FileLogger {
 public:
 	FileLogger(char* filename);
 	~FileLogger();

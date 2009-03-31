@@ -1,8 +1,6 @@
 // RCControl.cpp : Defines the entry point for the console application.
 //
 
-#define WINDOWS 1
-
 #if WINDOWS
 #include "stdafx.h"
 #include <windows.h>
@@ -12,11 +10,10 @@
 #include "file_logger.h"
 
 #if WINDOWS
-int _tmain(int argc, _TCHAR* argv[])
+int _tmain(int argc, _TCHAR* argv[]) {
 #elif LINUX
-int main(int argc, char* argv[])
+int main(int argc, char* argv[]) {
 #endif
-{
 	printf("Initialising...\n");
     //Make a controller & receiver
     PololuServoController controller = PololuServoController();
