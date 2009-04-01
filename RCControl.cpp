@@ -45,8 +45,8 @@ int main(int argc, char* argv[]) {
 		throttle += 500.0;
 
 		//Set position
-		controller.set_position_abs(1, (int)steering);
-		controller.set_position_abs(2, (int)throttle);
+		controller.set_position_abs(0, (int)steering);
+		controller.set_position_abs(1, (int)throttle);
 
 		//Display and log data
 		char buf[256];
