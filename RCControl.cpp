@@ -61,7 +61,7 @@ int main(int argc, char* argv[]) {
 
 		log.log(buf);
 		sleep(50);
-	}
+	} 
 	return 0;
 }
 

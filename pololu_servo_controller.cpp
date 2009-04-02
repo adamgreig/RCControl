@@ -4,6 +4,7 @@
 * Initialise the servo controller. Currently does nothing.
 */
 PololuServoController::PololuServoController() {
+	serial = new SerialPort(POLOLU_PORT, 9600);
 }
 
 /**
@@ -50,7 +51,7 @@ void PololuServoController::config(unsigned short int servo, bool on, bool direc
 
     data[4] |= 0x1F & (char)range;
 
-    serial.send_data(data, 5);
+    serial->send_data(data, 5);
 
 }
 
@@ -74,7 +75,7 @@ void PololuServoController::set_speed(unsigned short int servo, unsigned short i
     data[3] = (char)servo;
     data[4] = (char)speed;
 
-    serial.send_data(data, 5);
+    serial->send_data(data, 5);
 }
 
 /**
@@ -99,7 +100,7 @@ void PololuServoController::set_neutral(unsigned short int servo, unsigned short
     data[4] = 0x7F & (char)(position >> 7);
     data[5] = 0x7F & (char)position;
 
-    serial.send_data(data, 6);
+    serial->send_data(data, 6);
 }
 
 /**
@@ -122,7 +123,7 @@ void PololuServoController::set_position_7(unsigned short int servo, unsigned sh
     data[3] = (char)servo;
     data[4] = 0x7F & (char)position;
 
-    serial.send_data(data, 5);
+    serial->send_data(data, 5);
 }
 
 /**
@@ -145,7 +146,7 @@ void PololuServoController::set_position_8(unsigned short int servo, unsigned sh
     data[4] = 0x01 & (char)(position >> 7);
     data[5] = 0x7F & (char)(position);
 
-    serial.send_data(data, 6);
+    serial->send_data(data, 6);
 }
 
 /**
@@ -168,5 +169,5 @@ void PololuServoController::set_position_abs(unsigned short int servo, unsigned 
     data[4] = 0x7F & (char)(position >> 7);
     data[5] = 0x7F & (char)position;
 
-    serial.send_data(data, 6);
+    serial->send_data(data, 6);
 }
