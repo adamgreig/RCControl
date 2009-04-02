@@ -181,6 +181,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\gps_receiver.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\mftech_receiver.cpp"
 				>
 			</File>
@@ -208,6 +212,10 @@
 			>
 			<File
 				RelativePath=".\file_logger.h"
+				>
+			</File>
+			<File
+				RelativePath=".\gps_receiver.h"
 				>
 			</File>
 			<File

@@ -10,8 +10,8 @@ class SerialPort {
     public:
         SerialPort(char* port, int baud);
         ~SerialPort();
-        void send_data(char* data, unsigned int size);
-		void read_line(char* buffer, unsigned int size);
+        int send_data(char* data, unsigned int size);
+		int read_line(char* buffer, unsigned int size);
     private:
         #if WINDOWS
         HANDLE serial_port;

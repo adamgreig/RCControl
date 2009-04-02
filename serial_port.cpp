@@ -105,24 +105,30 @@ SerialPort::~SerialPort() {
 * \param data A char array of data to send. Not null-terminated.
 * \param size The number of bytes to send from data.
 */
-void SerialPort::send_data(char* data, unsigned int size) {
+int SerialPort::send_data(char* data, unsigned int size) {
 	if( !serial_port ) {
 		printf("Error: Serial port not open.\n");
-		return;
+		return -1;
 	}
     #if WINDOWS
 	DWORD written;
 	if( !WriteFile(serial_port, data, (DWORD)size, &written, NULL) ) {
 		printf("Error writing to the serial port.\n");
+		return -1;
+	} else {
+		return written;
 	}
     #elif LINUX
-	if(write(serial_port, data, size) == -1) {
+	int written = write(serial_port, data, size);
+	if(written == -1) {
 		printf("Error writing to serial port.\n");
-		return;
+		return -1;
+	} else {
+		return written;
 	}
     #endif
 
-    return;
+    return 0;
 }
 
 /**
@@ -130,28 +136,47 @@ void SerialPort::send_data(char* data, unsigned int size) {
 * \param buffer A pointer to a char array to be filled with data.
 * \param size The maximum number of bytes to read.
 */
-void SerialPort::read_line(char *buffer, unsigned int size) {
+int SerialPort::read_line(char *buffer, unsigned int size) {
 	if( !serial_port ) {
 		printf("Error: Serial port not open.\n");
-		return;
+		return -1;
 	}
 	unsigned int i;
-	char data;
+	unsigned int total_read = 0;
+	char data[1];
+
+	#if WINDOWS
+	DWORD data_read;
+	#elif LINUX
+	int data_read;
+	#endif
+	
 	for( i=0; i<size; i++ ) {
 		#if WINDOWS
-		DWORD read;
-		if( !ReadFile(serial_port, (LPVOID)data, 1, &read, NULL) ) {
+		if( !ReadFile(serial_port, (LPVOID)data, 1, &data_read, NULL) ) {
 			printf("Error reading from serial port.\n");
-			return;
+			return -1;
+		} else if( data_read == 0 ) {
+			return 0;
+		} else {
+			total_read++;
 		}
 		#elif LINUX
-		if( read(serial_port, data, 1) == -1 ) {
+		data_read = read(serial_port, data, 1);
+		if( data_read == -1 ) {
 			printf("Error reading from serial port.\n");
-			return;
+			return -1;
+		} else if( data_read == 0 ) {
+			return data_read;
+		} else {
+			total_read++;
 		}
 		#endif
-		buffer[i] = data;
-		if( data == '\n' ) return;
+		buffer[i] = data[0];
+		if( data[0] == '\n' ) {
+			buffer[i+1] = 0x00;
+			return (int)total_read;
+		}
 	}
-	return;
+	return total_read;
 }
