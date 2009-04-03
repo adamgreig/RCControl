@@ -11,7 +11,7 @@ CFLAGS = $(COMPILERFLAGS) $(INCLUDE)
 #LIBRARIES = -lX11 -lXi -lXmu -lglut -lGL -lGLU -lm
 
 # All objects that need compiling, add to the end of this if a new class is added
-OBJ = RCControl.o file_logger.o mftech_receiver.o pololu_serial.o pololu_servo_controller.o
+OBJ = RCControl.o file_logger.o mftech_receiver.o pololu_servo_controller.o serial_port.o gps_receiver.o
 
 # Final executable name
 EXEC = rccontrol
@@ -34,8 +34,9 @@ clean:
 #  Add a line here for any new classes that are added
 
 RCControl.o: RCControl.cpp pololu_servo_controller.h mftech_receiver.h file_logger.h
-pololu_serial.o: pololu_serial.h pololu_serial.cpp 
-pololu_servo_controller.o: pololu_servo_controller.h pololu_servo_controller.cpp pololu_serial.h
+pololu_servo_controller.o: pololu_servo_controller.h pololu_servo_controller.cpp serial_port.h
 file_logger.o: file_logger.h file_logger.cpp
 mftech_receiver.o: mftech_receiver.h mftech_receiver.cpp
+gps_receiver.o: gps_receiver.h gps_receiver.cpp serial_port.h
+serial_port.o: serial_port.h serial_port.cpp ports.h
 
