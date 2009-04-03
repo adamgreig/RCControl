@@ -1,6 +1,7 @@
 /**
 * \file Defines the serial ports used for the various serial port items in the project.
 */
+#pragma once
 
 #if WINDOWS
 #define POLOLU_PORT "COM8"
