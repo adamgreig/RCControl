@@ -180,9 +180,17 @@ int SerialPort::read_line(char *buffer, unsigned int size) {
 			total_read++;
 		}
 		#endif
+		if( total_read == 1 && data[0] == '\r' ) continue;
+
 		buffer[i] = data[0];
 		if( data[0] == '\n' ) {
-			buffer[i+1] = 0x00;
+			if( buffer[i - 1] != '\r' ) {
+				buffer[i] = '\r';
+				buffer[i+1] = '\n';
+				buffer[i+2] = 0x00;
+			} else {
+				buffer[i+1] = 0x00;
+			}
 			return (int)total_read;
 		}
 	}
