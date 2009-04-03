@@ -40,7 +40,7 @@ int main(int argc, char* argv[]) {
 		//Read the throttle and steering as a double
 		double throttle = (double)receiver.throttle();
 		double steering = (double)receiver.steering();
-
+        
 		//Convert from 0 to 0xFFFF to 500 to 5500 (servo range)
 		steering /= 65535.0;
 		steering *= 5000.0;
@@ -48,18 +48,18 @@ int main(int argc, char* argv[]) {
 		throttle /= 65535.0;
 		throttle *= 5000.0;
 		throttle += 500.0;
-
+        
 		//Update the GPS position
 		gps.update();
 		if( gps.has_lock() )
 			pos = gps.get_pos();
 		else
 			memset(&pos, sizeof(pos), 0x00);
-
+        
 		//Set position
 		controller.set_position_abs(0, (int)steering);
 		controller.set_position_abs(1, (int)throttle);
-
+        
 		//Display and log data
 		char buf[256];
 		printf(

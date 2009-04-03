@@ -49,7 +49,7 @@ SerialPort::SerialPort(char* port, int baud) {
     #elif LINUX
 
     //Open the serial port
-    serial_port = open(port, O_RDWR | O_NOCTTY | O_NDELAY);
+    serial_port = open(port, O_RDWR | O_NOCTTY | O_NDELAY | O_NONBLOCK);
     if( serial_port == -1 ) {
 		printf("Error opening serial port.\n");
         exit(1);
