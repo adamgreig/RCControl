@@ -5,7 +5,7 @@
 #LIBDIR  = -L/usr/X11R6/lib
 
 # Release build: optimise (use -g for debug build)
-COMPILERFLAGS = -Wall -O4 -DLINUX
+COMPILERFLAGS = -Wall -g -DLINUX
 CC = g++
 CFLAGS = $(COMPILERFLAGS) $(INCLUDE)
 #LIBRARIES = -lX11 -lXi -lXmu -lglut -lGL -lGLU -lm
