@@ -53,6 +53,7 @@ void GPSReceiver::update() {
 	//Process each available line on the buffer
 	while( serial->read_line(buffer, 128) != 0 ) {
 		buffer_length = (unsigned int)strlen(buffer);
+		printf("Sentence: %s\n", buffer);
 
 		//The first character should always be a $
 		if( buffer[0] != '$' )
@@ -96,8 +97,6 @@ void GPSReceiver::update() {
 		//Store the fields as they are parsed
 		char field[128];
 		unsigned int buffer_index = 0;
-		
-		printf("Sentence: %s\n", buffer);
 
 		//Get the sentence type
 		buffer_index = parse_until_comma(buffer, field, buffer_index);

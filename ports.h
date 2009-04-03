@@ -7,6 +7,6 @@
 #define POLOLU_PORT "COM8"
 #define GPS_PORT "COM3"
 #elif LINUX
-#define POLOLU_PORT "/dev/ttyUSB0"
-#define GPS_PORT "/dev/ttyUSB1"
+#define POLOLU_PORT "/dev/ttyUSB1"
+#define GPS_PORT "/dev/ttyUSB0"
 #endif
