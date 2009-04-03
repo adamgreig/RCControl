@@ -27,6 +27,7 @@ class GPSReceiver {
 public:
 	GPSReceiver(void);
 	void update();
+	
 	GPStime get_time();
 	GPSpos get_pos();
 	bool has_lock();
@@ -35,6 +36,8 @@ public:
 	double get_speed_mph();
 	double get_track_angle();
 private:
+	unsigned int parse_until_comma(char* input, char* output, unsigned int position);
+	
 	SerialPort* serial;
 	GPStime time;
 	GPSpos pos;
