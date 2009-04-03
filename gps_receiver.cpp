@@ -134,7 +134,7 @@ void GPSReceiver::update() {
 		if( strlen(field) > 0 ) {
 			pos.lat_degrees = 10*(field[0] - 48) + (field[1] - 48);
 			char minutes[16];
-			strncpy_s(minutes, &field[2], sizeof(field) - 3);
+			strncpy_s(minutes, 16, &field[2], sizeof(field) - 3);
 			pos.lat_minutes = atof(minutes);
 		}
 
@@ -144,14 +144,14 @@ void GPSReceiver::update() {
 			pos.lat_direction = field[0];
 		}
 
-		printf("Lat: %i degrees %d minutes %s\n", pos.lat_degrees, pos.lat_minutes, pos.lat_direction);
+		printf("Lat: %i degrees %f minutes %c\n", pos.lat_degrees, pos.lat_minutes, pos.lat_direction);
 
 		//Get the longitude
 		buffer_index = parse_until_comma(buffer, field, buffer_index);
 		if( strlen(field) > 0 ) {
 			pos.lon_degrees = 10*(field[0] - 48) + (field[1] - 48);
 			char minutes[16];
-			strncpy_s(minutes, &field[2], sizeof(field) - 3);
+			strncpy_s(minutes, 16, &field[2], sizeof(field) - 3);
 			pos.lon_minutes = atof(minutes);
 		}
 
@@ -161,7 +161,7 @@ void GPSReceiver::update() {
 			pos.lon_direction = field[0];
 		}
 
-		printf("Lon: %i degrees %d minutes %s\n", pos.lat_degrees, pos.lat_minutes, pos.lat_direction);
+		printf("Lon: %i degrees %f minutes %c\n", pos.lat_degrees, pos.lat_minutes, pos.lat_direction);
 
 		//Get groundspeed in knots
 		buffer_index = parse_until_comma(buffer, field, buffer_index);
@@ -169,7 +169,7 @@ void GPSReceiver::update() {
 			speed_knots = atof(field);
 		}
 
-		printf("Speed:\n\t%d knots\n\t%d m/s\n\t%d mph\n", get_speed_knots(), get_speed_ms(), get_speed_mph());
+		printf("Speed:\n\t%f knots\n\t%f m/s\n\t%f mph\n", get_speed_knots(), get_speed_ms(), get_speed_mph());
 
 		//Get track angle
 		buffer_index = parse_until_comma(buffer, field, buffer_index);
