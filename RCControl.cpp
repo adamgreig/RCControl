@@ -17,17 +17,21 @@ int _tmain(int argc, _TCHAR* argv[]) {
 int main(int argc, char* argv[]) {
 #endif
 	printf("Initialising...\n");
-/*
-    //Make a controller & receiver
+
+    //Make a servo controller, RC receiver and GPS receiver
     PololuServoController controller = PololuServoController();
 	MFTechReceiver receiver = MFTechReceiver();
+	GPSReceiver gps = GPSReceiver();
+
+	GPSpos pos;
+	memset(pos, sizeof(pos), 0x00);
 
 	//Make a logger
 	char logpath[32] = "log.txt";
 	FileLogger log = FileLogger(logpath);
 
-	//Wait a second for the serial device to initialise
-	sleep(1000);
+	//Wait 2 seconds for the serial devices to initialise
+	sleep(2000);
 
 	//Start acting as a middleman
 	printf("Now relaying data.\n");
@@ -45,13 +49,25 @@ int main(int argc, char* argv[]) {
 		throttle *= 5000.0;
 		throttle += 500.0;
 
+		//Update the GPS position
+		gps.update();
+		if( gps.has_lock() )
+			pos = gps.get_pos();
+		else
+			memset(pos, sizeof(pos), 0x00);
+
 		//Set position
 		controller.set_position_abs(0, (int)steering);
 		controller.set_position_abs(1, (int)throttle);
 
 		//Display and log data
 		char buf[256];
-		printf("%.5d\t%.5d\r", (int)steering, (int)throttle);
+		printf(
+			"Steering %.5d\tThrottle %.5d\tLat %.2d %.4f%c\tLon %.3d %.4f%c",
+			(int)steering, (int)throttle,
+			pos.lat_degrees, pos.lat_minutes, pos.lat_direction,
+			pos.lon_degrees, pos.lon_minutes, pos.lon_direction
+			);
 		
 		//Windows is a big fan of sprintf_s while Linux remains true to C and uses sprintf.
 		#if WINDOWS
@@ -61,12 +77,6 @@ int main(int argc, char* argv[]) {
 		#endif
 
 		log.log(buf);
-		sleep(50);
-	}
-*/
-	GPSReceiver gps = GPSReceiver();
-	for(;;) {
-		gps.update();
 	}
 	return 0;
 }

@@ -44,6 +44,11 @@ unsigned int GPSReceiver::parse_until_comma(char* input, char* output, unsigned 
 
 }
 
+/**
+* Check the serial port handler for new lines and parse any GGRMC sentences.
+* This function updates the class's internal state.
+* You should always call update() before accessing class members.
+*/
 void GPSReceiver::update() {
 	char buffer[128];
 	unsigned int i, buffer_length;
