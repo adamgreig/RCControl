@@ -152,13 +152,14 @@ int SerialPort::read_line(char *buffer, unsigned int size) {
 	unsigned int i;
 	unsigned int total_read = 0;
 	char data[1];
+    bool end_of_line = false;
 
 	#if WINDOWS
 	DWORD data_read;
 	#elif LINUX
 	int data_read;
 	#endif
-	
+	printf("About to read a line...");
 	for( i=0; i<size; i++ ) {
 		#if WINDOWS
 		if( !ReadFile(serial_port, (LPVOID)data, 1, &data_read, NULL) ) {
@@ -180,23 +181,20 @@ int SerialPort::read_line(char *buffer, unsigned int size) {
 			total_read++;
 		}
 		#endif
-		if( total_read == 1 && data[0] == '\r' ) {
-			i--;
-			total_read--;
-			continue;
-		}
-
-		buffer[i] = data[0];
-		if( data[0] == '\n' ) {
-			if( buffer[i - 1] != '\r' ) {
-				buffer[i] = '\r';
-				buffer[i+1] = '\n';
-				buffer[i+2] = 0x00;
-			} else {
-				buffer[i+1] = 0x00;
-			}
-			return (int)total_read;
-		}
+        
+        if( data[0] == '\n' || data[0] == '\r' ) {
+            total_read--;
+            if( end_of_line ) {
+                buffer[i - 1] = 0x00;
+                return (int)total_read;
+            } else {
+                end_of_line = true;
+            }
+        } else {
+            end_of_line = false;
+            buffer[i] = data[0];
+        }
+        
 	}
 	return total_read;
 }

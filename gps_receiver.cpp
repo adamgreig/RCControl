@@ -2,9 +2,6 @@
 
 #if LINUX
 //Linux doesn't have the _s functions so fake them when compiling for Linux.
-char * strtok_s( char* str, const char* deliminaters, char** context ) {
-	return strtok( str, deliminaters );
-}
 char * strncpy_s( char* dest, size_t size, const char* source, size_t num ) {
 	return strncpy( dest, source, num );
 }
@@ -53,34 +50,39 @@ void GPSReceiver::update() {
 	//Process each available line on the buffer
 	while( serial->read_line(buffer, 128) != 0 ) {
 		buffer_length = (unsigned int)strlen(buffer);
-		printf("Sentence: %s\n", buffer);
-
-		//The first character should always be a $
+		printf("\nSentence:\n%s\n", buffer);
+        
+        fflush(NULL);
+		
+        //The first character should always be a $
 		if( buffer[0] != '$' )
 			continue;
 		
 		//All valid GPS related sentences start GP
 		if( buffer[1] != 'G' || buffer[2] != 'P' )
 			continue;
-		
+        
 		//We are only interested in the RMC sentences
 		if( buffer[3] != 'R' || buffer[4] != 'M' || buffer[5] != 'C' )
 			continue;
-
+        
 		//After the message type there should be a ','
 		if( buffer[6] != ',' )
 			continue;
-
+        
 		//If everything so far is good, check the checksum
 		//Find the original checksum
 		char msg_checksum[2];
-		msg_checksum[0] = buffer[buffer_length - 4];
-		msg_checksum[1] = buffer[buffer_length - 3];
+		msg_checksum[0] = buffer[buffer_length - 2];
+		msg_checksum[1] = buffer[buffer_length - 1];
+        
 		//Calculate the message checksum (XOR all characters)
 		char calc_checksum = buffer[1];
-		for( i=2; i<(buffer_length - 5); i++ ) {
+        
+		for( i=2; i<(buffer_length - 3); i++ ) {
 			calc_checksum ^= buffer[i];
 		}
+        
 		//Store the new checksum as two hex characters
 		char calc_checksum_str[3];
 		#if WINDOWS
@@ -100,11 +102,9 @@ void GPSReceiver::update() {
 
 		//Get the sentence type
 		buffer_index = parse_until_comma(buffer, field, buffer_index);
-		printf("Sentence type: %s\n", field);
 		
 		//Get the time
 		buffer_index = parse_until_comma(buffer, field, buffer_index);
-		printf("Sentence time: %s\n", field);
 		if( strlen(field) > 0 ) {
 			time.hours = 10*((int)(field[0]) - 48) + ((int)field[1] - 48);
 			time.minutes = 10*((int)(field[2]) - 48) + ((int)field[3] - 48);
@@ -131,10 +131,10 @@ void GPSReceiver::update() {
 		//Get the latitude
 		buffer_index = parse_until_comma(buffer, field, buffer_index);
 		if( strlen(field) > 0 ) {
-			pos.lat_degrees = 10*(field[0] - 48) + (field[1] - 48);
 			char minutes[16];
-			strncpy_s(minutes, 16, &field[2], sizeof(field) - 3);
+			strncpy_s(minutes, 16, &field[2], strlen(field) - 3);
 			pos.lat_minutes = atof(minutes);
+            pos.lat_degrees = 10*(field[0] - 48) + (field[1] - 48);
 		}
 
 		//Get latitude direction
@@ -148,10 +148,12 @@ void GPSReceiver::update() {
 		//Get the longitude
 		buffer_index = parse_until_comma(buffer, field, buffer_index);
 		if( strlen(field) > 0 ) {
-			pos.lon_degrees = 10*(field[0] - 48) + (field[1] - 48);
 			char minutes[16];
-			strncpy_s(minutes, 16, &field[2], sizeof(field) - 3);
+			strncpy_s(minutes, 16, &field[3], strlen(field) - 4);
 			pos.lon_minutes = atof(minutes);
+            pos.lon_degrees = 100*(field[0] - 48);
+            pos.lon_degrees += 10*(field[1] - 48);
+            pos.lon_degrees += (field[1] - 48);
 		}
 
 		//Get latitude longitude
@@ -160,7 +162,7 @@ void GPSReceiver::update() {
 			pos.lon_direction = field[0];
 		}
 
-		printf("Lon: %i degrees %f minutes %c\n", pos.lat_degrees, pos.lat_minutes, pos.lat_direction);
+		printf("Lon: %d degrees %f minutes %c\n", pos.lon_degrees, pos.lon_minutes, pos.lon_direction);
 
 		//Get groundspeed in knots
 		buffer_index = parse_until_comma(buffer, field, buffer_index);
@@ -173,8 +175,9 @@ void GPSReceiver::update() {
 		//Get track angle
 		buffer_index = parse_until_comma(buffer, field, buffer_index);
 		if( strlen(field) > 0 ) {
-			speed_knots = atof(field);
+			track_angle = atof(field);
 		}
+        printf("Heading: %f degrees\n", track_angle);
 
 		//Get the date
 		buffer_index = parse_until_comma(buffer, field, buffer_index);
@@ -183,7 +186,7 @@ void GPSReceiver::update() {
 			time.month = 10*(field[2] - 48) + (field[3] - 48);
 			time.year = 10*(field[4] - 48) + (field[5] - 48);
 		}
-		printf("Date: %i/%i/%i\n", time.day, time.month, time.year);
+		printf("Date: %.2d/%.2d/%.2d\n", time.day, time.month, time.year);
 
 		//We could get the magnetic field variation but there's not much
 		// point. Instead, we stop here. If you did want this data, just
