@@ -50,7 +50,7 @@ SerialPort::SerialPort(char* port, int baud) {
     //Open the serial port
     serial_port = open(port, O_RDWR | O_NOCTTY | O_NDELAY);
     if( serial_port == -1 ) {
-		printf("Error opening serial port.\n")
+		printf("Error opening serial port.\n");
         exit(1);
     }
 
@@ -81,7 +81,7 @@ SerialPort::SerialPort(char* port, int baud) {
     serial_port_set = tcsetattr(serial_port, TCSANOW, &port_settings);
 	if( serial_port_set == -1 ) {
 		printf("Error configuring serial port.\n");
-		exit(1)
+		exit(1);
 	}
 
     #endif
