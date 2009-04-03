@@ -181,11 +181,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\mftech_receiver.cpp"
+				RelativePath=".\gps_receiver.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\pololu_serial.cpp"
+				RelativePath=".\mftech_receiver.cpp"
 				>
 			</File>
 			<File
@@ -194,6 +194,10 @@
 			</File>
 			<File
 				RelativePath=".\RCControl.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\serial_port.cpp"
 				>
 			</File>
 			<File
@@ -211,15 +215,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\gps_receiver.h"
+				>
+			</File>
+			<File
 				RelativePath=".\mftech_receiver.h"
 				>
 			</File>
 			<File
-				RelativePath=".\pololu_serial.h"
+				RelativePath=".\pololu_servo_controller.h"
 				>
 			</File>
 			<File
-				RelativePath=".\pololu_servo_controller.h"
+				RelativePath=".\ports.h"
+				>
+			</File>
+			<File
+				RelativePath=".\serial_port.h"
 				>
 			</File>
 			<File

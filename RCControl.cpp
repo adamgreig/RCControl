@@ -6,6 +6,7 @@
 
 #include "pololu_servo_controller.h"
 #include "mftech_receiver.h"
+#include "gps_receiver.h"
 #include "file_logger.h"
 
 //Windows apparently prefers the top form, while
@@ -16,7 +17,7 @@ int _tmain(int argc, _TCHAR* argv[]) {
 int main(int argc, char* argv[]) {
 #endif
 	printf("Initialising...\n");
-
+/*
     //Make a controller & receiver
     PololuServoController controller = PololuServoController();
 	MFTechReceiver receiver = MFTechReceiver();
@@ -61,6 +62,11 @@ int main(int argc, char* argv[]) {
 
 		log.log(buf);
 		sleep(50);
+	}
+*/
+	GPSReceiver gps = GPSReceiver();
+	for(;;) {
+		gps.update();
 	}
 	return 0;
 }

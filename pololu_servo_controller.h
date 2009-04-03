@@ -1,6 +1,7 @@
 #pragma once
 #include "stdafx.h"
-#include "pololu_serial.h"
+#include "serial_port.h"
+#include "ports.h"
 
 /**
 * Provides an interface to the Pololu servo controller.
@@ -18,5 +19,5 @@ class PololuServoController {
         void set_position_8(unsigned short int servo, unsigned short int position);
         void set_position_abs(unsigned short int servo, unsigned short int position);
     private:
-        PololuSerial serial;
+        SerialPort* serial;
 };
