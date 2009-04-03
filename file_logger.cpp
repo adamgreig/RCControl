@@ -47,9 +47,9 @@ void FileLogger::log(char *data) {
 	}
 	char time[32];
 	#if WINDOWS
-	sprintf_s(time, "%d", clock());
+	sprintf_s(time, "%d", (int)clock());
 	#elif LINUX
-	sprintf(time, "%d", clock());
+	sprintf(time, "%d", (int)clock());
 	#endif
 	char buf[293];
 	char tab[2] = "\t";

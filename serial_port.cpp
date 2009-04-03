@@ -5,7 +5,8 @@
 * The named port is opened at the given baud rate using 8N1
 * with no hardware flow control.
 * \param port The serial port to use, e.g. COM8 or /dev/ttyUSB0
-* \param baud The baud rate to use, e.g. 9600 or 4800
+* \param baud The baud rate to use, e.g. 9600 or 4800. On linux this
+* is restricted to a specific range of common values.
 */
 SerialPort::SerialPort(char* port, int baud) {
     #if WINDOWS
@@ -63,8 +64,15 @@ SerialPort::SerialPort(char* port, int baud) {
 
 	//Set all the weird arcane settings Linux demands (boils down to 8N1)
     struct termios port_settings;
-    cfsetispeed(&port_settings, baud);
-    cfsetospeed(&port_settings, baud);
+	speed_t baudrate = B4800;
+	if( baud == 9600 ) baudrate = B9600;
+	else if( baud == 19200 ) baudrate = B19200;
+	else if( baud == 38400 ) baudrate = B38400;
+	else if( baud == 57600 ) baudrate = B57600;
+	else if( baud == 115200 ) baudrate = B115200;
+	else if( baud == 230400 ) baudrate = B230400;
+    cfsetispeed(&port_settings, baudrate);
+    cfsetospeed(&port_settings, baudrate);
     port_settings.c_cflag &= ~PARENB;
     port_settings.c_cflag &= ~CSTOPB;
     port_settings.c_cflag &= ~CSIZE;
