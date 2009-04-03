@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
 	GPSReceiver gps = GPSReceiver();
 
 	GPSpos pos;
-	memset(pos, sizeof(pos), 0x00);
+	memset(&pos, sizeof(pos), 0x00);
 
 	//Make a logger
 	char logpath[32] = "log.txt";
@@ -54,7 +54,7 @@ int main(int argc, char* argv[]) {
 		if( gps.has_lock() )
 			pos = gps.get_pos();
 		else
-			memset(pos, sizeof(pos), 0x00);
+			memset(&pos, sizeof(pos), 0x00);
 
 		//Set position
 		controller.set_position_abs(0, (int)steering);
@@ -63,7 +63,7 @@ int main(int argc, char* argv[]) {
 		//Display and log data
 		char buf[256];
 		printf(
-			"Steering %.5d\tThrottle %.5d\tLat %.2d %.4f%c\tLon %.3d %.4f%c",
+			"Steering %.5d\tThrottle %.5d\tLat %.2d %.4f%c\tLon %.3d %.4f%c\n\n",
 			(int)steering, (int)throttle,
 			pos.lat_degrees, pos.lat_minutes, pos.lat_direction,
 			pos.lon_degrees, pos.lon_minutes, pos.lon_direction

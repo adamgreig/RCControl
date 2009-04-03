@@ -149,6 +149,7 @@ int SerialPort::read_line(char *buffer, unsigned int size) {
 		printf("Error: Serial port not open.\n");
 		return -1;
 	}
+
 	unsigned int i;
 	unsigned int total_read = 0;
 	char data[1];
@@ -159,7 +160,7 @@ int SerialPort::read_line(char *buffer, unsigned int size) {
 	#elif LINUX
 	int data_read;
 	#endif
-	printf("About to read a line...");
+	
 	for( i=0; i<size; i++ ) {
 		#if WINDOWS
 		if( !ReadFile(serial_port, (LPVOID)data, 1, &data_read, NULL) ) {
