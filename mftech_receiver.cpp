@@ -42,6 +42,8 @@ int MFTechReceiver::throttle() {
 				steering_val = e.value + 32767;
 			} else if( e.number == 1 ) {
 				throttle_val = e.value + 32767;
+			} else if( e.number == 3 ) {
+				modeselect_val = e.value + 32767;
 			}
 		}
 	}
@@ -76,9 +78,47 @@ int MFTechReceiver::steering() {
 				steering_val = e.value + 32767;
 			} else if( e.number == 1 ) {
 				throttle_val = e.value + 32767;
+			} else if( e.number == 3 ) {
+				modeselect_val = e.value + 32767;
 			}
 		}
 	}
 	return steering_val;
+#endif
+}
+
+/**
+* Return the current 'x-rotation' (used as mode select)
+* See MFTech::throttle for implementation details.
+*/
+int MFTechReceiver::modeselect() {
+#if WINDOWS
+	JOYINFOEX joyInfoEx;
+	ZeroMemory(&joyInfoEx, sizeof(joyInfoEx));
+	joyInfoEx.dwSize = sizeof(joyInfoEx);
+	if( joyGetPosEx(JOYSTICKID1, &joyInfoEx) != JOYERR_NOERROR ) {
+		printf("Error loading joystick.\n");
+		return -1;
+	}
+	return joyInfoEx.dwVpos;
+#elif LINUX
+	js_event e;
+	//On Linux, we instead check to see if any events occured
+	//with the joystick changing position, update the local
+	//steering and throttle, then return the required data.
+	//The data is -32767 to +32767 instead of 0 to 65535, so
+	//make it unto an unsigned int for consistency.
+	while( read(joystick, &e, sizeof(struct js_event)) != -1 ) {
+		if( e.type == 0x02 || e.type == 0x82 ) {
+			if( e.number == 0 ) {
+				steering_val = e.value + 32767;
+			} else if( e.number == 1 ) {
+				throttle_val = e.value + 32767;
+			} else if( e.number == 3 ) {
+				modeselect_val = e.value + 32767;
+			}
+		}
+	}
+	return modeselect_val;
 #endif
 }

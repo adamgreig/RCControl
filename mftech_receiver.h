@@ -32,9 +32,10 @@ public:
 	MFTechReceiver(void);
 	int throttle();
 	int steering();
+	int modeselect();
 #if LINUX
 private:
 	int joystick;
-	int throttle_val, steering_val;
+	int throttle_val, steering_val, modeselect_val;
 #endif
 };
