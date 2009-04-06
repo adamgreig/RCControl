@@ -2,12 +2,20 @@
 * \file Code entry point and main application logic.
 */
 
-#include "stdafx.h"
+#include <vector>
+#include <ctime>
 
+using namespace std;
+
+#include "stdafx.h"
 #include "pololu_servo_controller.h"
 #include "mftech_receiver.h"
-#include "gps_receiver.h"
-#include "file_logger.h"
+
+struct TimeControl {
+	clock_t offset;
+	unsigned int throttle;
+	unsigned int steering;
+};
 
 //Windows apparently prefers the top form, while
 // Linux doesn't really do _TCHAR or _tmain.
@@ -16,89 +24,117 @@ int _tmain(int argc, _TCHAR* argv[]) {
 #elif LINUX
 int main(int argc, char* argv[]) {
 #endif
-	printf("Initialising...\n");
-
-    //Make a servo controller, RC receiver and GPS receiver
-    PololuServoController controller = PololuServoController();
+	
+	//Create a new servo controller and rc receiver
+	printf("Initialising...\r\n");
+	PololuServoController servos = PololuServoController();
 	MFTechReceiver receiver = MFTechReceiver();
-	GPSReceiver gps = GPSReceiver();
-
-	GPSpos pos;
-	memset(&pos, sizeof(pos), 0x00);
-
-	//Make a logger
-	char logpath[32] = "log.txt";
-	FileLogger log = FileLogger(logpath);
-
-	//Wait 2 seconds for the serial devices to initialise
 	sleep(2000);
-
-	//Start acting as a middleman
-	printf("Now relaying data.\n");
+	printf("Active.\r\n");
+	
+	//Store a vector list of time and the control state
+	vector<TimeControl> time_controls;
+	//Store the start time, to calculate offsets
+	clock_t starttime = 0;
 
 	for(;;) {
-		//Read the throttle and steering as a double
-		double throttle = (double)receiver.throttle();
-		double steering = (double)receiver.steering();
-        
-		//Convert from 0 to 0xFFFF to 500 to 5500 (servo range)
-		steering /= 65535.0;
-		steering *= 5000.0;
-		steering += 500.0;
-		throttle /= 65535.0;
-		throttle *= 5000.0;
-		throttle += 500.0;
-        
-		//Update the GPS position
-		gps.update();
-		if( gps.has_lock() )
-			pos = gps.get_pos();
-		else
-			memset(&pos, sizeof(pos), 0x00);
-        
-		//Set position
-		controller.set_position_abs(0, (int)steering);
-		controller.set_position_abs(1, (int)throttle);
-        
-		//Display and log data
-		char buf[256];
-		printf(
-			"Steering %.5d\tThrottle %.5d\tLat %.2d %.4f%c\tLon %.3d %.4f%c\n\n",
-			(int)steering, (int)throttle,
-			pos.lat_degrees, pos.lat_minutes, pos.lat_direction,
-			pos.lon_degrees, pos.lon_minutes, pos.lon_direction
-			);
 		
-		//Windows is a big fan of sprintf_s while Linux remains true to C and uses sprintf.
-		#if WINDOWS
-		sprintf_s(buf, "%d\t%d", (int)steering, (int)throttle);
-		#elif LINUX
-		sprintf(buf, "%d\t%d", (int)steering, (int)throttle);
-		#endif
+		//Modeselect is the right hand up/down stick
+		//If it's not fully up, passthrough and store control
+		int modeselect = receiver.modeselect();
+		if( modeselect != 65535 ) {
+			//Get the current throttle and steering position
+			double throttle = receiver.throttle();
+			double steering = receiver.steering();
+			
+			//Change from "0-65535" to "500-5500"
+			throttle /= 65535.0;
+			steering /= 65535.0;
+			throttle *= 5000.0;
+			steering *= 5000.0;
+			throttle += 500.0;
+			steering += 500.0;
+			
+			//Start the clock if it's not already
+			if( starttime == 0 ) {
+				starttime = clock();
+			}
+			
+			//A new struct to hold the time and controls
+			TimeControl tc;
+			tc.offset = clock() - starttime;
+			tc.throttle = (unsigned int)throttle;
+			tc.steering = (unsigned int)steering;
 
-		log.log(buf);
+			//Pass through current controls
+			servos.set_position_abs(0, tc.steering);
+			servos.set_position_abs(1, tc.throttle);
+
+			//Store current controls
+			time_controls.push_back(tc);
+
+			printf("STORE throttle %.5d\tsteering %.5d\r\n", (int)throttle, (int)steering);
+			sleep(10);
+
+
+		} else {
+			//Replay previous stored sequence
+
+			//Iterator for the list of TimeControls
+			vector<TimeControl>::iterator tc_it;
+			
+			//Wait a second before starting
+			sleep(1000);
+			
+			//Take the current time, for offsets
+			starttime = clock();
+			
+			//Run through the control list
+			for( tc_it = time_controls.begin(); tc_it < time_controls.end(); tc_it++ ) {
+				//If the mode switch changes position, stop quickly
+				if( receiver.modeselect() != 65535 ) break;
+				
+				//Take the current struct
+				TimeControl current_tc = *tc_it;
+
+				//Wait for it to be the right time
+				while( clock() - starttime < current_tc.offset );
+
+				//Set the servos
+				servos.set_position_abs(0, current_tc.steering);
+				servos.set_position_abs(1, current_tc.throttle);
+
+				printf("SEND throttle %.5d\tsteering %.5d\r\n", current_tc.throttle, current_tc.steering);
+			}
+
+			starttime = 0;
+			time_controls.clear();
+		}
+
 	}
-	return 0;
+	
+
 }
 
 /**
 \mainpage RCControl Documentation
 
-At the time of writing, the code consists of four classes.
+At the time of writing, the code consists of five classes.
+
+\section serial Serial Interface
+The SerialPort class connects to a serial port given in the constructor and allows
+reading or writing to it. This is used by the Pololu controller and the GPS receiver.
 
 \section pololu Pololu Controller
-Two are related to a Pololu Servo Controller: http://www.pololu.com/catalog/product/390
+Pololu Servo Controller: http://www.pololu.com/catalog/product/390
 
 This device simulates a serial port to the computer over USB, and has a straightforward
 protocol defined in http://www.pololu.com/file/0J35/usc01a_guide.pdf
 
 It controls up to 16 servos connected directly to it, and requires an external power supply.
 
-PololuSerial is responsible for communicating with it over the serial port. It is not
-particularly protocol aware, but does set the port up with the correct settings for
-communication (8 data bits, 1 stop bit, no parity bit, no hardware flow control).
 PololuServoController defines the Pololu API. Each method takes a servo number and
-the data to send. The class also instances PololuSerial for actually sending data.
+the data to send. The class also instances SerialPort for actually sending data.
 
 \section mftech MFTech Receiver
 The third class, MFTechReceiver, is related to the MFTech R/C Receiver:
@@ -113,6 +149,11 @@ It simulates a joystick to the computer, using the normal USB HID protocol. This
 read as a joystick using some special Windows commands, or as a normal file handler
 on Linux which generates events whenever the joystick does anything. In both cases
 the class interface is the same.
+
+\section gps GPSReceiver
+The GPSReceiver class reads in lines from the GPS over the serial port, then parses
+them as NMEA strings to find GPRMC sentences which it extracts position and time data
+from, making them available as class members.
 
 \section logger Logger
 The final class, FileLogger, logs this data to a file. This is to be used with other sensors for
