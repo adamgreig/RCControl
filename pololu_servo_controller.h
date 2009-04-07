@@ -11,6 +11,7 @@
 class PololuServoController {
     public:
         PololuServoController();
+		~PololuServoController();
         
         void config(unsigned short int servo, bool on=false, bool direction=false, unsigned short int range=15);
         void set_speed(unsigned short int servo, unsigned short int speed=0);

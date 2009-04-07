@@ -8,6 +8,16 @@ PololuServoController::PololuServoController() {
 }
 
 /**
+* On destruction, set all servos to OFF
+*/
+PololuServoController::~PololuServoController() {
+	unsigned short int i;
+	for(i=0; i<16; i++) {
+		config(i, false);
+	}
+}
+
+/**
 * Set the servo configuration, and send out the values over the serial port.
 * \param servo The servo number to configure.
 * \param on whether The servo should be turned on.
