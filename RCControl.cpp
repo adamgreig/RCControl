@@ -74,7 +74,7 @@ int main(int argc, char* argv[]) {
 			time_controls.push_back(tc);
 
 			printf("STORE throttle %.5d\tsteering %.5d\r\n", (int)throttle, (int)steering);
-			sleep(10);
+			sleep(50);
 
 
 		} else {
