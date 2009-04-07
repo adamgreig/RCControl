@@ -40,6 +40,9 @@
 <tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMFTechReceiver.html#3a38baeea6f6a93e72b0e663eb00500a">steering</a> ()</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Return the current steering position.  <a href="#3a38baeea6f6a93e72b0e663eb00500a"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMFTechReceiver.html#f7d412a941240ede18296829b728eb70">modeselect</a> ()</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Return the current 'x-rotation' (used as mode select) See MFTech::throttle for implementation details.  <a href="#f7d412a941240ede18296829b728eb70"></a><br></td></tr>
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 Connect to an MFTech R/C receiver, represented on the system as a joystick, and read in the X and Y axis values to be used as throttle and steeling data. 
@@ -110,10 +113,31 @@ Return the current steering position.
 See MFTech::throttle for implementation details. 
 </div>
 </div><p>
+<a class="anchor" name="f7d412a941240ede18296829b728eb70"></a><!-- doxytag: member="MFTechReceiver::modeselect" ref="f7d412a941240ede18296829b728eb70" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int MFTechReceiver::modeselect           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Return the current 'x-rotation' (used as mode select) See MFTech::throttle for implementation details. 
+<p>
+
+</div>
+</div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li><a class="el" href="mftech__receiver_8h.html">mftech_receiver.h</a><li><a class="el" href="mftech__receiver_8cpp.html">mftech_receiver.cpp</a></ul>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Mar 31 12:32:35 2009 for RCControl by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue Apr 7 16:31:29 2009 for RCControl by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
 </body>

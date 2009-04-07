@@ -1,3 +1,4 @@
-<area shape="rect" href="$pololu__servo__controller_8h.html" title="pololu_servo_controller.h" alt="" coords="13,81,176,105">
-<area shape="rect" href="$stdafx_8h.html" title="stdafx.h" alt="" coords="61,231,128,255">
-<area shape="rect" href="$pololu__serial_8h.html" title="pololu_serial.h" alt="" coords="88,156,192,180">
+<area shape="rect" href="$pololu__servo__controller_8h.html" title="pololu_servo_controller.h" alt="" coords="37,81,200,105">
+<area shape="rect" href="$stdafx_8h.html" title="stdafx.h" alt="" coords="44,231,111,255">
+<area shape="rect" href="$serial__port_8h.html" title="serial_port.h" alt="" coords="73,156,164,180">
+<area shape="rect" href="$ports_8h.html" title="ports.h" alt="" coords="188,156,249,180">

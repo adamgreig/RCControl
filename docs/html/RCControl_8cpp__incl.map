@@ -1,5 +1,5 @@
-<area shape="rect" href="$stdafx_8h.html" title="stdafx.h" alt="" coords="80,231,147,255">
-<area shape="rect" href="$pololu__servo__controller_8h.html" title="pololu_servo_controller.h" alt="" coords="32,81,195,105">
-<area shape="rect" href="$mftech__receiver_8h.html" title="mftech_receiver.h" alt="" coords="189,156,312,180">
-<area shape="rect" href="$file__logger_8h.html" title="file_logger.h" alt="" coords="304,81,395,105">
-<area shape="rect" href="$pololu__serial_8h.html" title="pololu_serial.h" alt="" coords="61,156,165,180">
+<area shape="rect" href="$stdafx_8h.html" title="stdafx.h" alt="" coords="157,231,224,255">
+<area shape="rect" href="$pololu__servo__controller_8h.html" title="pololu_servo_controller.h" alt="" coords="144,81,307,105">
+<area shape="rect" href="$mftech__receiver_8h.html" title="mftech_receiver.h" alt="" coords="387,156,509,180">
+<area shape="rect" href="$serial__port_8h.html" title="serial_port.h" alt="" coords="187,156,277,180">
+<area shape="rect" href="$ports_8h.html" title="ports.h" alt="" coords="301,156,363,180">

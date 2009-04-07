@@ -31,7 +31,7 @@ Collaboration diagram for PololuServoController:</div>
 <div class="dynsection">
 <p><center><img src="classPololuServoController__coll__graph.png" border="0" usemap="#PololuServoController__coll__map" alt="Collaboration graph"></center>
 <map name="PololuServoController__coll__map">
-<area shape="rect" href="classPololuSerial.html" title="Interfaces to a serial port." alt="" coords="33,6,124,30"></map>
+<area shape="rect" href="classSerialPort.html" title="Interfaces to a serial port." alt="" coords="40,6,117,30"></map>
 <center><font size="2">[<a href="graph_legend.html">legend</a>]</font></center></div>
 
 <p>
@@ -41,6 +41,9 @@ Collaboration diagram for PololuServoController:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPololuServoController.html#a32eb4b165fe3eb1fb52b9adc4debd3b">PololuServoController</a> ()</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Initialise the servo controller.  <a href="#a32eb4b165fe3eb1fb52b9adc4debd3b"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPololuServoController.html#383f42b874ebbc1157e95d4e905fc4ef">~PololuServoController</a> ()</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">On destruction, set all servos to OFF.  <a href="#383f42b874ebbc1157e95d4e905fc4ef"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPololuServoController.html#5dcdf049c4bb3534d00328869120031c">config</a> (unsigned short int servo, bool on=false, bool direction=false, unsigned short int range=15)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Set the servo configuration, and send out the values over the serial port.  <a href="#5dcdf049c4bb3534d00328869120031c"></a><br></td></tr>
@@ -60,13 +63,13 @@ Collaboration diagram for PololuServoController:</div>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Set the servo's position absolutely, without using range or neutral values.  <a href="#ec634c6d52a7a598f5b71c90a00e0f50"></a><br></td></tr>
 <tr><td colspan="2"><br><h2>Private Attributes</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="classPololuSerial.html">PololuSerial</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPololuServoController.html#cbfe2098f3b7685b9ba31473e6e2873c">serial</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="classSerialPort.html">SerialPort</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPololuServoController.html#4c984a80fd37eb4c11552816bd52e826">serial</a></td></tr>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 Provides an interface to the Pololu servo controller. 
 <p>
-Exposes each of the Pololu commands and sends that data to the controller via a <a class="el" href="classPololuSerial.html" title="Interfaces to a serial port.">PololuSerial</a> object. <hr><h2>Constructor &amp; Destructor Documentation</h2>
+Exposes each of the Pololu commands and sends that data to the controller via a PololuSerial object. <hr><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" name="a32eb4b165fe3eb1fb52b9adc4debd3b"></a><!-- doxytag: member="PololuServoController::PololuServoController" ref="a32eb4b165fe3eb1fb52b9adc4debd3b" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -86,6 +89,27 @@ Exposes each of the Pololu commands and sends that data to the controller via a 
 Initialise the servo controller. 
 <p>
 Currently does nothing. 
+</div>
+</div><p>
+<a class="anchor" name="383f42b874ebbc1157e95d4e905fc4ef"></a><!-- doxytag: member="PololuServoController::~PololuServoController" ref="383f42b874ebbc1157e95d4e905fc4ef" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">PololuServoController::~PololuServoController           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+On destruction, set all servos to OFF. 
+<p>
+
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
@@ -328,12 +352,12 @@ This command allows direct control of the internal servo position variable. Neut
 </div>
 </div><p>
 <hr><h2>Member Data Documentation</h2>
-<a class="anchor" name="cbfe2098f3b7685b9ba31473e6e2873c"></a><!-- doxytag: member="PololuServoController::serial" ref="cbfe2098f3b7685b9ba31473e6e2873c" args="" -->
+<a class="anchor" name="4c984a80fd37eb4c11552816bd52e826"></a><!-- doxytag: member="PololuServoController::serial" ref="4c984a80fd37eb4c11552816bd52e826" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classPololuSerial.html">PololuSerial</a> <a class="el" href="classPololuServoController.html#cbfe2098f3b7685b9ba31473e6e2873c">PololuServoController::serial</a><code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="classSerialPort.html">SerialPort</a>* <a class="el" href="classPololuServoController.html#4c984a80fd37eb4c11552816bd52e826">PololuServoController::serial</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -346,7 +370,7 @@ This command allows direct control of the internal servo position variable. Neut
 <hr>The documentation for this class was generated from the following files:<ul>
 <li><a class="el" href="pololu__servo__controller_8h.html">pololu_servo_controller.h</a><li><a class="el" href="pololu__servo__controller_8cpp.html">pololu_servo_controller.cpp</a></ul>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Mar 31 12:32:35 2009 for RCControl by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue Apr 7 16:31:29 2009 for RCControl by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
 </body>

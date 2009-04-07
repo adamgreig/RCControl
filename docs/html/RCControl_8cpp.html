@@ -15,10 +15,10 @@
   </div>
 </div>
 <div class="contents">
-<h1>RCControl.cpp File Reference</h1><code>#include &quot;<a class="el" href="stdafx_8h.html">stdafx.h</a>&quot;</code><br>
+<h1>RCControl.cpp File Reference</h1><code>#include &lt;vector&gt;</code><br>
+<code>#include &quot;<a class="el" href="stdafx_8h.html">stdafx.h</a>&quot;</code><br>
 <code>#include &quot;<a class="el" href="pololu__servo__controller_8h.html">pololu_servo_controller.h</a>&quot;</code><br>
 <code>#include &quot;<a class="el" href="mftech__receiver_8h.html">mftech_receiver.h</a>&quot;</code><br>
-<code>#include &quot;<a class="el" href="file__logger_8h.html">file_logger.h</a>&quot;</code><br>
 
 <p>
 <div class="dynheader">
@@ -26,29 +26,31 @@ Include dependency graph for RCControl.cpp:</div>
 <div class="dynsection">
 <p><center><img src="RCControl_8cpp__incl.png" border="0" usemap="#RCControl.cpp_map" alt=""></center>
 <map name="RCControl.cpp_map">
-<area shape="rect" href="stdafx_8h.html" title="stdafx.h" alt="" coords="80,231,147,255"><area shape="rect" href="pololu__servo__controller_8h.html" title="pololu_servo_controller.h" alt="" coords="32,81,195,105"><area shape="rect" href="mftech__receiver_8h.html" title="mftech_receiver.h" alt="" coords="189,156,312,180"><area shape="rect" href="file__logger_8h.html" title="file_logger.h" alt="" coords="304,81,395,105"><area shape="rect" href="pololu__serial_8h.html" title="pololu_serial.h" alt="" coords="61,156,165,180"></map>
+<area shape="rect" href="stdafx_8h.html" title="stdafx.h" alt="" coords="157,231,224,255"><area shape="rect" href="pololu__servo__controller_8h.html" title="pololu_servo_controller.h" alt="" coords="144,81,307,105"><area shape="rect" href="mftech__receiver_8h.html" title="mftech_receiver.h" alt="" coords="387,156,509,180"><area shape="rect" href="serial__port_8h.html" title="serial_port.h" alt="" coords="187,156,277,180"><area shape="rect" href="ports_8h.html" title="ports.h" alt="" coords="301,156,363,180"></map>
 </div>
 <table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
+<tr><td colspan="2"><br><h2>Classes</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">struct &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTimeControl.html">TimeControl</a></td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight"><a class="el" href="structTimeControl.html" title="TimeControl stores some form of timestamp offset and the position of the throttle...">TimeControl</a> stores some form of timestamp offset and the position of the throttle and steering at that time.  <a href="structTimeControl.html#_details">More...</a><br></td></tr>
 <tr><td colspan="2"><br><h2>Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="RCControl_8cpp.html#246738711a7d8463a9b2c7382df01e91">printf</a> (&quot;Initialising...\n&quot;)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="RCControl_8cpp.html#d6bd404e8c06c1deda31a2061c6bc870">printf</a> (&quot;Initialising...\r\n&quot;)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="RCControl_8cpp.html#55e8e99214bc694ac75f43467859b0f5">sleep</a> (1000)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="RCControl_8cpp.html#107eca21cb56dedc592453709dffb422">sleep</a> (2000)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="RCControl_8cpp.html#83ca0da7eace2e4c322757854ad055d3">printf</a> (&quot;Now relaying data.\n&quot;)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="RCControl_8cpp.html#1cd9174e572325ad34d290b65211c569">printf</a> (&quot;Active.\r\n&quot;)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="RCControl_8cpp.html#8b9eb702eb3f9bcba3923532d1e801db">for</a> (;;)</td></tr>
 
 <tr><td colspan="2"><br><h2>Variables</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="classPololuServoController.html">PololuServoController</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="RCControl_8cpp.html#6943347b17f33b2fdb0eb682b5cea37d">controller</a> = <a class="el" href="classPololuServoController.html">PololuServoController</a>()</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="classPololuServoController.html">PololuServoController</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="RCControl_8cpp.html#0a4a8b73158ef1ddc8366efd2c9284f1">servos</a> = <a class="el" href="classPololuServoController.html">PololuServoController</a>()</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="classMFTechReceiver.html">MFTechReceiver</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="RCControl_8cpp.html#0f7cb4465a919334bc44b116949c1667">receiver</a> = <a class="el" href="classMFTechReceiver.html">MFTechReceiver</a>()</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">char&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="RCControl_8cpp.html#72c0f13bfe17956a64cd66a9403ef59a">logpath</a> [32] = &quot;log.txt&quot;</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">vector&lt; <a class="el" href="structTimeControl.html">TimeControl</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="RCControl_8cpp.html#7e8eba2acc128b52e6a3766b59fb1a8c">time_controls</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="classFileLogger.html">FileLogger</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="RCControl_8cpp.html#6a98e22d3d64663648ad65a768a9aa0c">log</a> = <a class="el" href="classFileLogger.html">FileLogger</a>(<a class="el" href="RCControl_8cpp.html#72c0f13bfe17956a64cd66a9403ef59a">logpath</a>)</td></tr>
-
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="RCControl_8cpp.html#9717e7bbecb906637e86cef6da3d83c2">return</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">unsigned long int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="RCControl_8cpp.html#aaff71909585b881fcf9c4d19c602e78">starttime</a> = 0</td></tr>
 
 </table>
 <hr><h2>Function Documentation</h2>
@@ -72,14 +74,14 @@ Include dependency graph for RCControl.cpp:</div>
 
 </div>
 </div><p>
-<a class="anchor" name="83ca0da7eace2e4c322757854ad055d3"></a><!-- doxytag: member="RCControl.cpp::printf" ref="83ca0da7eace2e4c322757854ad055d3" args="(&quot;Now relaying data.\n&quot;)" -->
+<a class="anchor" name="1cd9174e572325ad34d290b65211c569"></a><!-- doxytag: member="RCControl.cpp::printf" ref="1cd9174e572325ad34d290b65211c569" args="(&quot;Active.\r\n&quot;)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">printf           </td>
           <td>(</td>
-          <td class="paramtype">&quot;Now relaying data.\n&quot;&nbsp;</td>
+          <td class="paramtype">&quot;Active.\r\n&quot;&nbsp;</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"></td>
@@ -92,14 +94,14 @@ Include dependency graph for RCControl.cpp:</div>
 
 </div>
 </div><p>
-<a class="anchor" name="246738711a7d8463a9b2c7382df01e91"></a><!-- doxytag: member="RCControl.cpp::printf" ref="246738711a7d8463a9b2c7382df01e91" args="(&quot;Initialising...\n&quot;)" -->
+<a class="anchor" name="d6bd404e8c06c1deda31a2061c6bc870"></a><!-- doxytag: member="RCControl.cpp::printf" ref="d6bd404e8c06c1deda31a2061c6bc870" args="(&quot;Initialising...\r\n&quot;)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">printf           </td>
           <td>(</td>
-          <td class="paramtype">&quot;Initialising...\n&quot;&nbsp;</td>
+          <td class="paramtype">&quot;Initialising...\r\n&quot;&nbsp;</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"></td>
@@ -112,14 +114,14 @@ Include dependency graph for RCControl.cpp:</div>
 
 </div>
 </div><p>
-<a class="anchor" name="55e8e99214bc694ac75f43467859b0f5"></a><!-- doxytag: member="RCControl.cpp::sleep" ref="55e8e99214bc694ac75f43467859b0f5" args="(1000)" -->
+<a class="anchor" name="107eca21cb56dedc592453709dffb422"></a><!-- doxytag: member="RCControl.cpp::sleep" ref="107eca21cb56dedc592453709dffb422" args="(2000)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">sleep           </td>
           <td>(</td>
-          <td class="paramtype">1000&nbsp;</td>
+          <td class="paramtype">2000&nbsp;</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"></td>
@@ -133,51 +135,6 @@ Include dependency graph for RCControl.cpp:</div>
 </div>
 </div><p>
 <hr><h2>Variable Documentation</h2>
-<a class="anchor" name="6943347b17f33b2fdb0eb682b5cea37d"></a><!-- doxytag: member="RCControl.cpp::controller" ref="6943347b17f33b2fdb0eb682b5cea37d" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classPololuServoController.html">PololuServoController</a> <a class="el" href="RCControl_8cpp.html#6943347b17f33b2fdb0eb682b5cea37d">controller</a> = <a class="el" href="classPololuServoController.html">PololuServoController</a>()          </td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-</div>
-</div><p>
-<a class="anchor" name="6a98e22d3d64663648ad65a768a9aa0c"></a><!-- doxytag: member="RCControl.cpp::log" ref="6a98e22d3d64663648ad65a768a9aa0c" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classFileLogger.html">FileLogger</a> <a class="el" href="RCControl_8cpp.html#6a98e22d3d64663648ad65a768a9aa0c">log</a> = <a class="el" href="classFileLogger.html">FileLogger</a>(<a class="el" href="RCControl_8cpp.html#72c0f13bfe17956a64cd66a9403ef59a">logpath</a>)          </td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-</div>
-</div><p>
-<a class="anchor" name="72c0f13bfe17956a64cd66a9403ef59a"></a><!-- doxytag: member="RCControl.cpp::logpath" ref="72c0f13bfe17956a64cd66a9403ef59a" args="[32]" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">char <a class="el" href="RCControl_8cpp.html#72c0f13bfe17956a64cd66a9403ef59a">logpath</a>[32] = &quot;log.txt&quot;          </td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-</div>
-</div><p>
 <a class="anchor" name="0f7cb4465a919334bc44b116949c1667"></a><!-- doxytag: member="RCControl.cpp::receiver" ref="0f7cb4465a919334bc44b116949c1667" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -193,12 +150,42 @@ Include dependency graph for RCControl.cpp:</div>
 
 </div>
 </div><p>
-<a class="anchor" name="9717e7bbecb906637e86cef6da3d83c2"></a><!-- doxytag: member="RCControl.cpp::return" ref="9717e7bbecb906637e86cef6da3d83c2" args="" -->
+<a class="anchor" name="0a4a8b73158ef1ddc8366efd2c9284f1"></a><!-- doxytag: member="RCControl.cpp::servos" ref="0a4a8b73158ef1ddc8366efd2c9284f1" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="RCControl_8cpp.html#9717e7bbecb906637e86cef6da3d83c2">return</a>          </td>
+          <td class="memname"><a class="el" href="classPololuServoController.html">PololuServoController</a> <a class="el" href="RCControl_8cpp.html#0a4a8b73158ef1ddc8366efd2c9284f1">servos</a> = <a class="el" href="classPololuServoController.html">PololuServoController</a>()          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+</div>
+</div><p>
+<a class="anchor" name="aaff71909585b881fcf9c4d19c602e78"></a><!-- doxytag: member="RCControl.cpp::starttime" ref="aaff71909585b881fcf9c4d19c602e78" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long int <a class="el" href="RCControl_8cpp.html#aaff71909585b881fcf9c4d19c602e78">starttime</a> = 0          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+</div>
+</div><p>
+<a class="anchor" name="7e8eba2acc128b52e6a3766b59fb1a8c"></a><!-- doxytag: member="RCControl.cpp::time_controls" ref="7e8eba2acc128b52e6a3766b59fb1a8c" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt;<a class="el" href="structTimeControl.html">TimeControl</a>&gt; <a class="el" href="RCControl_8cpp.html#7e8eba2acc128b52e6a3766b59fb1a8c">time_controls</a>          </td>
         </tr>
       </table>
 </div>
@@ -209,7 +196,7 @@ Include dependency graph for RCControl.cpp:</div>
 </div>
 </div><p>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Mar 31 12:32:35 2009 for RCControl by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue Apr 7 16:31:28 2009 for RCControl by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
 </body>
