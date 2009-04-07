@@ -5,11 +5,18 @@
 #include <vector>
 
 #if WINDOWS
+//Get the number of system ticks since execution started.
+//This is a consistent way to time the replay, on windows
 #include <ctime>
 unsigned long int get_timestamp() {
 	return (unsigned long int)clock();
 }
 #elif LINUX
+//Linux does clock() completely differently and uselessly.
+//Instead, gettimeofday, take away a lot from the seconds
+// so they still fit in a long int, multiply by 1k to make
+// space for milliseconds, divide microseconds by 1k to
+// make them into milliseconds, then add the two and return
 #include <sys/time.h>
 unsigned long int get_timestamp() {
 	struct timeval thetime;
@@ -27,6 +34,10 @@ using namespace std;
 #include "pololu_servo_controller.h"
 #include "mftech_receiver.h"
 
+/**
+* TimeControl stores some form of timestamp offset and the
+* position of the throttle and steering at that time.
+*/
 struct TimeControl {
 	unsigned long int offset;
 	unsigned int throttle;
@@ -178,7 +189,13 @@ computer eventually do the driving itself. Other data would also need to be logg
 the same class should be useful, perhaps with some extension. Image data would be more
 complicated, while GPS/acceleration data should be straightforward to log.
 
+\section todo To-Do
+The main thing that needs to be improved at the moment is the GPS receiver class, which
+currently hangs waiting for a full line at the serial port. This significantly slows down
+program execution. A non-blocking read on the serial port, or using Window's OVERLAPPING
+read functions to generate events may help resolve this issue.
+
 Adam Greig
 
-March 2009
+April 2009
 */
