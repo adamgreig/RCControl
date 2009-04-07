@@ -3,7 +3,23 @@
 */
 
 #include <vector>
+
+#if WINDOWS
 #include <ctime>
+unsigned long int get_timestamp() {
+	return (unsigned long int)clock();
+}
+#elif LINUX
+#include <sys/time.h>
+unsigned long int get_timestamp() {
+	struct timeval thetime;
+	gettimeofday(&thetime, NULL);
+	thetime.tv_sec -= 1234567890;
+	thetime.tv_sec *= 1000;
+	thetime.tv_usec /= 1000;
+	return (unsigned long int)(thetime.tv_sec + thetime.tv_usec);
+}
+#endif
 
 using namespace std;
 
@@ -12,7 +28,7 @@ using namespace std;
 #include "mftech_receiver.h"
 
 struct TimeControl {
-	clock_t offset;
+	unsigned long int offset;
 	unsigned int throttle;
 	unsigned int steering;
 };
@@ -35,14 +51,14 @@ int main(int argc, char* argv[]) {
 	//Store a vector list of time and the control state
 	vector<TimeControl> time_controls;
 	//Store the start time, to calculate offsets
-	clock_t starttime = 0;
+	unsigned long int starttime = 0;
 
 	for(;;) {
 		
 		//Modeselect is the right hand up/down stick
 		//If it's not fully up, passthrough and store control
 		int modeselect = receiver.modeselect();
-		if( modeselect != 65535 ) {
+		if( modeselect < 50000 ) {
 			//Get the current throttle and steering position
 			double throttle = receiver.throttle();
 			double steering = receiver.steering();
@@ -57,12 +73,12 @@ int main(int argc, char* argv[]) {
 			
 			//Start the clock if it's not already
 			if( starttime == 0 ) {
-				starttime = clock();
+				starttime = get_timestamp();
 			}
 			
 			//A new struct to hold the time and controls
 			TimeControl tc;
-			tc.offset = clock() - starttime;
+			tc.offset = get_timestamp() - starttime;
 			tc.throttle = (unsigned int)throttle;
 			tc.steering = (unsigned int)steering;
 
@@ -87,18 +103,18 @@ int main(int argc, char* argv[]) {
 			sleep(1000);
 			
 			//Take the current time, for offsets
-			starttime = clock();
+			starttime = get_timestamp();
 			
 			//Run through the control list
 			for( tc_it = time_controls.begin(); tc_it < time_controls.end(); tc_it++ ) {
 				//If the mode switch changes position, stop quickly
-				if( receiver.modeselect() != 65535 ) break;
+				if( receiver.modeselect() < 50000 ) break;
 				
 				//Take the current struct
 				TimeControl current_tc = *tc_it;
 
 				//Wait for it to be the right time
-				while( clock() - starttime < current_tc.offset );
+				while( get_timestamp() - starttime < current_tc.offset );
 
 				//Set the servos
 				servos.set_position_abs(0, current_tc.steering);
