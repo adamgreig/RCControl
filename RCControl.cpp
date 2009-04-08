@@ -193,6 +193,9 @@ currently hangs waiting for a full line at the serial port. This significantly s
 program execution. A non-blocking read on the serial port, or using Window's OVERLAPPING
 read functions to generate events may help resolve this issue.
 
+Side note: Window's OVERLAPPING file reading is horrible! You may be better off just using
+a thread to constantly read the GPS port synchronously and have the main thread check that.
+
 Adam Greig
 
 April 2009

@@ -201,30 +201,37 @@ void GPSReceiver::update() {
 	//}
 }
 
+///Return the GPStime struct
 GPStime GPSReceiver::get_time() {
 	return time;
 }
 
+///Return the GPSpos struct
 GPSpos GPSReceiver::get_pos() {
 	return pos;
 }
 
+///Return the lock status
 bool GPSReceiver::has_lock() {
 	return lock;
 }
 
+///Return current speed in knots
 double GPSReceiver::get_speed_knots() {
 	return speed_knots;
 }
 
+///Return current speed in metres per sec
 double GPSReceiver::get_speed_ms() {
 	return speed_knots * 0.51444;
 }
 
+///Return current speed in miles per hour
 double GPSReceiver::get_speed_mph() {
 	return speed_knots * 1.15078;
 }
 
+///Return current heading
 double GPSReceiver::get_track_angle() {
 	return track_angle;
 }

@@ -4,6 +4,9 @@
 #include "serial_port.h"
 #include "ports.h"
 
+/**
+* Hold all the time information from a GPRMC sentence
+*/
 struct GPStime {
 	unsigned short int year;
 	unsigned short int month;
@@ -14,6 +17,9 @@ struct GPStime {
 	unsigned short int milliseconds;
 };
 
+/**
+* Hold the GPS position as degrees, minutes and direction lat and lon
+*/
 struct GPSpos {
 	unsigned short int lat_degrees;
 	double lat_minutes;
@@ -23,6 +29,11 @@ struct GPSpos {
 	char lon_direction;
 };
 
+/**
+* Read GPS sentences from a serial port, then parse the GPRMC sentences.
+* The GPRMC sentences are parsed for time, position, lock status, speed
+* and angle.
+*/
 class GPSReceiver {
 public:
 	GPSReceiver(void);

@@ -61,9 +61,8 @@ SerialPort::SerialPort(char* port, int baud) {
 		cout << "Error initialising serial port." << endl;
 		exit(1);
 	}
-
-	//Set all the weird arcane settings Linux demands (boils down to 8N1)
-    struct termios port_settings;
+	
+	//Linux requires baudrates be given as a constant
 	speed_t baudrate = B4800;
 	if( baud == 9600 ) baudrate = B9600;
 	else if( baud == 19200 ) baudrate = B19200;
@@ -71,6 +70,9 @@ SerialPort::SerialPort(char* port, int baud) {
 	else if( baud == 57600 ) baudrate = B57600;
 	else if( baud == 115200 ) baudrate = B115200;
 	else if( baud == 230400 ) baudrate = B230400;
+
+	//Set all the weird arcane settings Linux demands (boils down to 8N1)
+    struct termios port_settings;
     cfsetispeed(&port_settings, baudrate);
     cfsetospeed(&port_settings, baudrate);
     port_settings.c_cflag &= ~PARENB;
@@ -177,12 +179,16 @@ int SerialPort::read_line(char *buffer, unsigned int size) {
 			cout << "Error reading from serial port." << endl;
 			return -1;
 		} else if( data_read == 0 ) {
-			return data_read;
+			return 0;
 		} else {
 			total_read++;
 		}
 		#endif
         
+		//For some reason the end of line is not consistently signalled
+		// with \r\n. Instead sometimes \r\r, \n\r, \n\n is seen.
+		// Therefore, just watch out for two of these control characters
+		// before returning.
         if( data[0] == '\n' || data[0] == '\r' ) {
             total_read--;
             if( end_of_line ) {
