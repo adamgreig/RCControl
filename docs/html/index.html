@@ -29,14 +29,15 @@ MFTech Receiver</a></h2>
 The third class, <a class="el" href="classMFTechReceiver.html" title="Connect to an MFTech R/C receiver, represented on the system as a joystick, and read...">MFTechReceiver</a>, is related to the MFTech R/C Receiver: <a href="http://www.mftech.de/usb-interface_en.htm#RC_USB-Interface_III">http://www.mftech.de/usb-interface_en.htm#RC_USB-Interface_III</a><p>
 This device reads in data from a remote control transmitter (controller). It either connects to the transmitter by a buddy cable directly, or by connecting to an R/C receiver via the servo cables. The latter method is to be used on the car as this allows the transmitter to transmit normally over radio, then the receiver picks the signals up and sends the data on to the MFTech interface which the computer reads. It simulates a joystick to the computer, using the normal USB HID protocol. This is read as a joystick using some special Windows commands, or as a normal file handler on Linux which generates events whenever the joystick does anything. In both cases the class interface is the same.<h2><a class="anchor" name="gps">
 GPSReceiver</a></h2>
-The <a class="el" href="classGPSReceiver.html">GPSReceiver</a> class reads in lines from the GPS over the serial port, then parses them as NMEA strings to find GPRMC sentences which it extracts position and time data from, making them available as class members.<h2><a class="anchor" name="logger">
+The <a class="el" href="classGPSReceiver.html" title="Read GPS sentences from a serial port, then parse the GPRMC sentences.">GPSReceiver</a> class reads in lines from the GPS over the serial port, then parses them as NMEA strings to find GPRMC sentences which it extracts position and time data from, making them available as class members.<h2><a class="anchor" name="logger">
 Logger</a></h2>
 The final class, <a class="el" href="classFileLogger.html" title="Log a given string to the filename given at construction.">FileLogger</a>, logs this data to a file. This is to be used with other sensors for recording how a human driver controlled the car, with the aim of having the onboard computer eventually do the driving itself. Other data would also need to be logged but the same class should be useful, perhaps with some extension. Image data would be more complicated, while GPS/acceleration data should be straightforward to log.<h2><a class="anchor" name="todo">
 To-Do</a></h2>
 The main thing that needs to be improved at the moment is the GPS receiver class, which currently hangs waiting for a full line at the serial port. This significantly slows down program execution. A non-blocking read on the serial port, or using Window's OVERLAPPING read functions to generate events may help resolve this issue.<p>
+Side note: Window's OVERLAPPING file reading is horrible! You may be better off just using a thread to constantly read the GPS port synchronously and have the main thread check that.<p>
 Adam Greig<p>
 April 2009 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Apr 7 16:31:25 2009 for RCControl by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Wed Apr 8 14:21:50 2009 for RCControl by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
 </body>

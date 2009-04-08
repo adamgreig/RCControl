@@ -21,14 +21,17 @@
   </div>
 </div>
 <div class="contents">
-<h1>GPSReceiver Class Reference</h1><!-- doxytag: class="GPSReceiver" --><code>#include &lt;gps_receiver.h&gt;</code>
+<h1>GPSReceiver Class Reference</h1><!-- doxytag: class="GPSReceiver" -->Read GPS sentences from a serial port, then parse the GPRMC sentences.  
+<a href="#_details">More...</a>
+<p>
+<code>#include &lt;gps_receiver.h&gt;</code>
 <p>
 <div class="dynheader">
 Collaboration diagram for GPSReceiver:</div>
 <div class="dynsection">
 <p><center><img src="classGPSReceiver__coll__graph.png" border="0" usemap="#GPSReceiver__coll__map" alt="Collaboration graph"></center>
 <map name="GPSReceiver__coll__map">
-<area shape="rect" href="structGPStime.html" title="GPStime" alt="" coords="5,6,80,30"><area shape="rect" href="structGPSpos.html" title="GPSpos" alt="" coords="104,6,173,30"><area shape="rect" href="classSerialPort.html" title="Interfaces to a serial port." alt="" coords="197,6,275,30"></map>
+<area shape="rect" href="structGPStime.html" title="Hold all the time information from a GPRMC sentence." alt="" coords="5,6,80,30"><area shape="rect" href="structGPSpos.html" title="Hold the GPS position as degrees, minutes and direction lat and lon." alt="" coords="104,6,173,30"><area shape="rect" href="classSerialPort.html" title="Interfaces to a serial port." alt="" coords="197,6,275,30"></map>
 <center><font size="2">[<a href="graph_legend.html">legend</a>]</font></center></div>
 
 <p>
@@ -43,18 +46,25 @@ Collaboration diagram for GPSReceiver:</div>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Check the serial port handler for new lines and parse any GGRMC sentences.  <a href="#4545d51c5a893529422073eb87ba16f0"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="structGPStime.html">GPStime</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGPSReceiver.html#a20de47cfcee4fde5a11d13952c6a430">get_time</a> ()</td></tr>
 
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Return the <a class="el" href="structGPStime.html" title="Hold all the time information from a GPRMC sentence.">GPStime</a> struct.  <a href="#a20de47cfcee4fde5a11d13952c6a430"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="structGPSpos.html">GPSpos</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGPSReceiver.html#efa950e6aaead744b7ac08b994896730">get_pos</a> ()</td></tr>
 
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Return the <a class="el" href="structGPSpos.html" title="Hold the GPS position as degrees, minutes and direction lat and lon.">GPSpos</a> struct.  <a href="#efa950e6aaead744b7ac08b994896730"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGPSReceiver.html#870166ceb32b3c6d0808bc4056b6598b">has_lock</a> ()</td></tr>
 
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Return the lock status.  <a href="#870166ceb32b3c6d0808bc4056b6598b"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">double&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGPSReceiver.html#56c022b355533a561f720ebebc4315ed">get_speed_knots</a> ()</td></tr>
 
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Return current speed in knots.  <a href="#56c022b355533a561f720ebebc4315ed"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">double&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGPSReceiver.html#8ca4bd42ab88c7dc60cb3e1a66b2b89a">get_speed_ms</a> ()</td></tr>
 
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Return current speed in metres per sec.  <a href="#8ca4bd42ab88c7dc60cb3e1a66b2b89a"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">double&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGPSReceiver.html#79052e0b2b41d892f9c9dd3503741aa3">get_speed_mph</a> ()</td></tr>
 
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Return current speed in miles per hour.  <a href="#79052e0b2b41d892f9c9dd3503741aa3"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">double&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGPSReceiver.html#9e51592890720bf977a09dfa2c8915ae">get_track_angle</a> ()</td></tr>
 
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Return current heading.  <a href="#9e51592890720bf977a09dfa2c8915ae"></a><br></td></tr>
 <tr><td colspan="2"><br><h2>Private Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGPSReceiver.html#58bc9219ee07321b7bb32eb06caa46da">parse_until_comma</a> (char *input, char *output, unsigned int position)</td></tr>
 
@@ -73,7 +83,10 @@ Collaboration diagram for GPSReceiver:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">double&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGPSReceiver.html#956aacca985bb5583183dd695f881ccb">track_angle</a></td></tr>
 
 </table>
-<hr><h2>Constructor &amp; Destructor Documentation</h2>
+<hr><a name="_details"></a><h2>Detailed Description</h2>
+Read GPS sentences from a serial port, then parse the GPRMC sentences. 
+<p>
+The GPRMC sentences are parsed for time, position, lock status, speed and angle. <hr><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" name="9d34791573df858389bdd38054b61a02"></a><!-- doxytag: member="GPSReceiver::GPSReceiver" ref="9d34791573df858389bdd38054b61a02" args="(void)" -->
 <div class="memitem">
 <div class="memproto">
@@ -134,6 +147,8 @@ This function updates the class's internal state. You should always call <a clas
 <div class="memdoc">
 
 <p>
+Return the <a class="el" href="structGPStime.html" title="Hold all the time information from a GPRMC sentence.">GPStime</a> struct. 
+<p>
 
 </div>
 </div><p>
@@ -152,6 +167,8 @@ This function updates the class's internal state. You should always call <a clas
 </div>
 <div class="memdoc">
 
+<p>
+Return the <a class="el" href="structGPSpos.html" title="Hold the GPS position as degrees, minutes and direction lat and lon.">GPSpos</a> struct. 
 <p>
 
 </div>
@@ -172,6 +189,8 @@ This function updates the class's internal state. You should always call <a clas
 <div class="memdoc">
 
 <p>
+Return the lock status. 
+<p>
 
 </div>
 </div><p>
@@ -190,6 +209,8 @@ This function updates the class's internal state. You should always call <a clas
 </div>
 <div class="memdoc">
 
+<p>
+Return current speed in knots. 
 <p>
 
 </div>
@@ -210,6 +231,8 @@ This function updates the class's internal state. You should always call <a clas
 <div class="memdoc">
 
 <p>
+Return current speed in metres per sec. 
+<p>
 
 </div>
 </div><p>
@@ -229,6 +252,8 @@ This function updates the class's internal state. You should always call <a clas
 <div class="memdoc">
 
 <p>
+Return current speed in miles per hour. 
+<p>
 
 </div>
 </div><p>
@@ -247,6 +272,8 @@ This function updates the class's internal state. You should always call <a clas
 </div>
 <div class="memdoc">
 
+<p>
+Return current heading. 
 <p>
 
 </div>
@@ -389,7 +416,7 @@ Sets output to be a null terminated string of everything up to the comma. Return
 <hr>The documentation for this class was generated from the following files:<ul>
 <li><a class="el" href="gps__receiver_8h.html">gps_receiver.h</a><li><a class="el" href="gps__receiver_8cpp.html">gps_receiver.cpp</a></ul>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Apr 7 16:31:29 2009 for RCControl by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Wed Apr 8 14:21:53 2009 for RCControl by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
 </body>
