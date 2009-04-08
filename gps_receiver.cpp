@@ -56,7 +56,6 @@ void GPSReceiver::update() {
 	//while( serial->read_line(buffer, 128) != 0 ) {
     serial->read_line(buffer, 128);
 		buffer_length = (unsigned int)strlen(buffer);
-		//printf("\nSentence:\n%s\n", buffer);
         
         fflush(NULL);
 		
@@ -98,7 +97,7 @@ void GPSReceiver::update() {
 		#endif
 		//Compare the two
 		if( strncmp( msg_checksum, calc_checksum_str, 2 ) != 0 ) {
-			printf("Checksum incorrect, skipping line.\n");
+			cout << "Checksum incorrect, skipping line." << endl;
 			return;
 		}
 		
@@ -124,13 +123,13 @@ void GPSReceiver::update() {
 		buffer_index = parse_until_comma(buffer, field, buffer_index);
 		if( strlen(field) > 0 && field[0] == 'A' ) {
 			lock = true;
-			//printf("GPS position lock obtained.\n");
+			//cout << "GPS position lock obtained." << endl;
 		} else {
 			//If there is no lock, there's no point parsing anything else.
 			//The only other field available is the date, everything else
 			// is empty.
 			lock = false;
-			printf("No position lock.\n");
+			cout << "No position lock." << endl;
 			return;
 		}
 

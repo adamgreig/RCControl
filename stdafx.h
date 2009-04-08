@@ -20,4 +20,5 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <stdio>
+using namespace std;

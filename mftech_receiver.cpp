@@ -25,7 +25,7 @@ int MFTechReceiver::throttle() {
 	ZeroMemory(&joyInfoEx, sizeof(joyInfoEx));
 	joyInfoEx.dwSize = sizeof(joyInfoEx);
 	if( joyGetPosEx(JOYSTICKID1, &joyInfoEx) != JOYERR_NOERROR ) {
-		printf("Error loading joystick.\n");
+		cout << "Error loading joystick." << endl;
 		return -1;
 	}
 	return joyInfoEx.dwYpos;
@@ -61,7 +61,7 @@ int MFTechReceiver::steering() {
 	ZeroMemory(&joyInfoEx, sizeof(joyInfoEx));
 	joyInfoEx.dwSize = sizeof(joyInfoEx);
 	if( joyGetPosEx(JOYSTICKID1, &joyInfoEx) != JOYERR_NOERROR ) {
-		printf("Error loading joystick.\n");
+		cout << "Error loading joystick." << endl;
 		return -1;
 	}
 	return joyInfoEx.dwXpos;
@@ -97,7 +97,7 @@ int MFTechReceiver::modeselect() {
 	ZeroMemory(&joyInfoEx, sizeof(joyInfoEx));
 	joyInfoEx.dwSize = sizeof(joyInfoEx);
 	if( joyGetPosEx(JOYSTICKID1, &joyInfoEx) != JOYERR_NOERROR ) {
-		printf("Error loading joystick.\n");
+		cout << "Error loading joystick." << endl;
 		return -1;
 	}
 	return joyInfoEx.dwVpos;

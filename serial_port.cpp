@@ -16,7 +16,7 @@ SerialPort::SerialPort(char* port, int baud) {
     //Check it opened successfully
     if( serial_port == INVALID_HANDLE_VALUE ) {
 		DWORD err = GetLastError();
-		printf("Error opening serial port. Error %i.\n", err);
+		cout << "Error opening serial port. Error " << err << endl;
 		exit(err);
     }
 
@@ -28,7 +28,7 @@ SerialPort::SerialPort(char* port, int baud) {
     timeouts.WriteTotalTimeoutConstant   = 0;
 	if(SetCommTimeouts(serial_port, &timeouts) == FALSE) {
 		DWORD err = GetLastError();
-		printf("Error setting timeouts on serial port. Error %i.\n", err);
+		cout << "Error setting timeouts on serial port. Error " << err << endl;
         exit(err);
 	}
 
@@ -42,7 +42,7 @@ SerialPort::SerialPort(char* port, int baud) {
     DWORD result = SetCommState(serial_port, &dcb);
 	if( !result ) {
 		DWORD err = GetLastError();
-		printf("Error setting comm state. Error %i.\n", err);
+		cout << "Error setting comm state. Error " << err << endl;
 		exit(err);
 	}
 
@@ -51,14 +51,14 @@ SerialPort::SerialPort(char* port, int baud) {
     //Open the serial port
     serial_port = open(port, O_RDWR | O_NOCTTY | O_NDELAY);
     if( serial_port == -1 ) {
-		printf("Error opening serial port.\n");
+		cout << "Error opening serial port." << endl;
         exit(1);
     }
 
 	//Initialise the port
     int serial_port_set = fcntl(serial_port, F_SETFL, 0);
 	if( serial_port_set == -1 ) {
-		printf("Error initialising serial port.\n");
+		cout << "Error initialising serial port." << endl;
 		exit(1);
 	}
 
@@ -88,12 +88,12 @@ SerialPort::SerialPort(char* port, int baud) {
 	//Apply settings
     serial_port_set = tcsetattr(serial_port, TCSANOW, &port_settings);
 	if( serial_port_set == -1 ) {
-		printf("Error configuring serial port.\n");
+		cout << ("Error configuring serial port." << endl;
 		exit(1);
 	}
 
     #endif
-	printf("Serial port '%s' opened successfully.\n", port);
+	cout << "Serial port '" << port << "' opened successfully.\n" << endl;
 	return;
 }
 
@@ -115,13 +115,13 @@ SerialPort::~SerialPort() {
 */
 int SerialPort::send_data(char* data, unsigned int size) {
 	if( !serial_port ) {
-		printf("Error: Serial port not open.\n");
+		cout << "Error: Serial port not open." << endl;
 		return -1;
 	}
     #if WINDOWS
 	DWORD written;
 	if( !WriteFile(serial_port, data, (DWORD)size, &written, NULL) ) {
-		printf("Error writing to the serial port.\n");
+		cout << "Error writing to the serial port." << endl;
 		return -1;
 	} else {
 		return written;
@@ -146,7 +146,7 @@ int SerialPort::send_data(char* data, unsigned int size) {
 */
 int SerialPort::read_line(char *buffer, unsigned int size) {
 	if( !serial_port ) {
-		printf("Error: Serial port not open.\n");
+		cout << "Error: Serial port not open." << endl;
 		return -1;
 	}
 
@@ -164,7 +164,7 @@ int SerialPort::read_line(char *buffer, unsigned int size) {
 	for( i=0; i<size; i++ ) {
 		#if WINDOWS
 		if( !ReadFile(serial_port, (LPVOID)data, 1, &data_read, NULL) ) {
-			printf("Error reading from serial port.\n");
+			cout <<"Error reading from serial port." << endl;
 			return -1;
 		} else if( data_read == 0 ) {
 			return 0;
@@ -174,7 +174,7 @@ int SerialPort::read_line(char *buffer, unsigned int size) {
 		#elif LINUX
 		data_read = read(serial_port, data, 1);
 		if( data_read == -1 ) {
-			printf("Error reading from serial port.\n");
+			cout << "Error reading from serial port." << endl;
 			return -1;
 		} else if( data_read == 0 ) {
 			return data_read;

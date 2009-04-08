@@ -10,17 +10,17 @@ FileLogger::FileLogger(char* filename) {
 	if( file == INVALID_HANDLE_VALUE ) {
 		file = NULL;
 		DWORD err = GetLastError();
-		printf("Error %n opening file for logging.\n", err);
+		cout << "Error " << err << " opening file for logging." << endl;
 		return;
 	}
 	#elif LINUX
 	file = open(filename, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP);
 	if( file == -1 ) {
-		printf( "Error opening file." );
+		cout << "Error opening file." << endl;
 		file = NULL;
 		return;
 	}
-	printf("Log file opened.\n");
+	cout << "Log file opened." << endl;
 	#endif
 
 }
@@ -42,7 +42,7 @@ FileLogger::~FileLogger() {
 */
 void FileLogger::log(char *data) {
 	if( strlen(data) > 255 ) {
-		printf("Error: input string too long to FileLogger::log.\n");
+		cout << "Error: input string too long to FileLogger::log." << endl;
 		return;
 	}
 	char time[32];

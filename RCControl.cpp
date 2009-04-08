@@ -28,8 +28,6 @@ unsigned long int get_timestamp() {
 }
 #endif
 
-using namespace std;
-
 #include "stdafx.h"
 #include "pololu_servo_controller.h"
 #include "mftech_receiver.h"
@@ -53,11 +51,11 @@ int main(int argc, char* argv[]) {
 #endif
 	
 	//Create a new servo controller and rc receiver
-	printf("Initialising...\r\n");
+	cout << "Initialising..." << endl;
 	PololuServoController servos = PololuServoController();
 	MFTechReceiver receiver = MFTechReceiver();
 	sleep(2000);
-	printf("Active.\r\n");
+	cout << "Active." << endl;
 	
 	//Store a vector list of time and the control state
 	vector<TimeControl> time_controls;
