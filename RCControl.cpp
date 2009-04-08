@@ -28,8 +28,6 @@ unsigned long int get_timestamp() {
 }
 #endif
 
-using namespace std;
-
 #include "stdafx.h"
 #include "pololu_servo_controller.h"
 #include "mftech_receiver.h"
@@ -53,11 +51,11 @@ int main(int argc, char* argv[]) {
 #endif
 	
 	//Create a new servo controller and rc receiver
-	printf("Initialising...\r\n");
+	cout << "Initialising..." << endl;
 	PololuServoController servos = PololuServoController();
 	MFTechReceiver receiver = MFTechReceiver();
 	sleep(2000);
-	printf("Active.\r\n");
+	cout << "Active." << endl;
 	
 	//Store a vector list of time and the control state
 	vector<TimeControl> time_controls;
@@ -194,6 +192,9 @@ The main thing that needs to be improved at the moment is the GPS receiver class
 currently hangs waiting for a full line at the serial port. This significantly slows down
 program execution. A non-blocking read on the serial port, or using Window's OVERLAPPING
 read functions to generate events may help resolve this issue.
+
+Side note: Window's OVERLAPPING file reading is horrible! You may be better off just using
+a thread to constantly read the GPS port synchronously and have the main thread check that.
 
 Adam Greig
 
