@@ -11,7 +11,7 @@ char * strncpy_s( char* dest, size_t size, const char* source, size_t num ) {
 * Initialise the serial port used to talk to the GPS unit.
 */
 GPSReceiver::GPSReceiver(void) {
-	serial = new SerialPort(GPS_PORT, 4800);
+	serial = new SerialPort(GPS_PORT, 9600);
 	memset(&time, sizeof(time), 0x00);
 	memset(&pos, sizeof(pos), 0x00);
 }
@@ -56,6 +56,8 @@ void GPSReceiver::update() {
 	//while( serial->read_line(buffer, 128) != 0 ) {
     serial->read_line(buffer, 128);
 		buffer_length = (unsigned int)strlen(buffer);
+
+		printf("Read in: %s", buffer);
         
         fflush(NULL);
 		
@@ -117,13 +119,13 @@ void GPSReceiver::update() {
 			time.milliseconds = 100*((int)field[7] - 48) + 10*((int)field[8] - 48);
 			time.milliseconds += ((int)field[9] - 48);
 		}
-		//printf("Time: %.2i:%.2i:%.2i.%.3i UTC\n", time.hours, time.minutes, time.seconds, time.milliseconds);
+		printf("Time: %.2i:%.2i:%.2i.%.3i UTC\n", time.hours, time.minutes, time.seconds, time.milliseconds);
 
 		//Get the lock status
 		buffer_index = parse_until_comma(buffer, field, buffer_index);
 		if( strlen(field) > 0 && field[0] == 'A' ) {
 			lock = true;
-			//cout << "GPS position lock obtained." << endl;
+			cout << "GPS position lock obtained." << endl;
 		} else {
 			//If there is no lock, there's no point parsing anything else.
 			//The only other field available is the date, everything else
@@ -148,7 +150,7 @@ void GPSReceiver::update() {
 			pos.lat_direction = field[0];
 		}
 
-		//printf("Lat: %i degrees %f minutes %c\n", pos.lat_degrees, pos.lat_minutes, pos.lat_direction);
+		printf("Lat: %i degrees %f minutes %c\n", pos.lat_degrees, pos.lat_minutes, pos.lat_direction);
 
 		//Get the longitude
 		buffer_index = parse_until_comma(buffer, field, buffer_index);
@@ -167,7 +169,7 @@ void GPSReceiver::update() {
 			pos.lon_direction = field[0];
 		}
 
-		//printf("Lon: %d degrees %f minutes %c\n", pos.lon_degrees, pos.lon_minutes, pos.lon_direction);
+		printf("Lon: %d degrees %f minutes %c\n", pos.lon_degrees, pos.lon_minutes, pos.lon_direction);
 
 		//Get groundspeed in knots
 		buffer_index = parse_until_comma(buffer, field, buffer_index);
@@ -175,14 +177,14 @@ void GPSReceiver::update() {
 			speed_knots = atof(field);
 		}
 
-		//printf("Speed:\n\t%f knots\n\t%f m/s\n\t%f mph\n", get_speed_knots(), get_speed_ms(), get_speed_mph());
+		printf("Speed:\n\t%f knots\n\t%f m/s\n\t%f mph\n", get_speed_knots(), get_speed_ms(), get_speed_mph());
 
 		//Get track angle
 		buffer_index = parse_until_comma(buffer, field, buffer_index);
 		if( strlen(field) > 0 ) {
 			track_angle = atof(field);
 		}
-        //printf("Heading: %f degrees\n", track_angle);
+        printf("Heading: %f degrees\n", track_angle);
 
 		//Get the date
 		buffer_index = parse_until_comma(buffer, field, buffer_index);
@@ -191,7 +193,7 @@ void GPSReceiver::update() {
 			time.month = 10*(field[2] - 48) + (field[3] - 48);
 			time.year = 10*(field[4] - 48) + (field[5] - 48);
 		}
-		//printf("Date: %.2d/%.2d/%.2d\n", time.day, time.month, time.year);
+		printf("Date: %.2d/%.2d/%.2d\n", time.day, time.month, time.year);
 
 		//We could get the magnetic field variation but there's not much
 		// point. Instead, we stop here. If you did want this data, just

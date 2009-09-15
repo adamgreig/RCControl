@@ -30,7 +30,8 @@ unsigned long int get_timestamp() {
 
 #include "stdafx.h"
 #include "pololu_servo_controller.h"
-#include "mftech_receiver.h"
+//#include "mftech_receiver.h"
+#include "wiimote.h"
 
 /**
 * TimeControl stores some form of timestamp offset and the
@@ -52,89 +53,48 @@ int main(int argc, char* argv[]) {
 	
 	//Create a new servo controller and rc receiver
 	cout << "Initialising..." << endl;
+	wiimote remote;
 	PololuServoController servos = PololuServoController();
-	MFTechReceiver receiver = MFTechReceiver();
-	sleep(2000);
+	remote.Connect(wiimote::FIRST_AVAILABLE);
+	remote.SetLEDs(0x0f);
+	remote.SetReportType(wiimote::IN_BUTTONS_ACCEL);
 	cout << "Active." << endl;
-	
-	//Store a vector list of time and the control state
-	vector<TimeControl> time_controls;
-	//Store the start time, to calculate offsets
-	unsigned long int starttime = 0;
 
 	for(;;) {
-		
-		//Modeselect is the right hand up/down stick
-		//If it's not fully up, passthrough and store control
-		int modeselect = receiver.modeselect();
-		if( modeselect < 50000 ) {
-			//Get the current throttle and steering position
-			double throttle = receiver.throttle();
-			double steering = receiver.steering();
 			
-			//Change from "0-65535" to "500-5500"
-			throttle /= 65535.0;
-			steering /= 65535.0;
-			throttle *= 5000.0;
-			steering *= 5000.0;
-			throttle += 500.0;
-			steering += 500.0;
-			
-			//Start the clock if it's not already
-			if( starttime == 0 ) {
-				starttime = get_timestamp();
+			remote.RefreshState();
+			int roll, pitch;
+
+			if( remote.Button.A() ) {
+
+				roll = remote.Acceleration.Orientation.Roll;
+				// roll: -90 to 90
+				roll = -roll; // roll: 90 to -90
+				roll += 90;   // roll: 180 to 0
+				roll *= 28;   // roll: 5040 to 0
+				roll += 500;  // roll: 5540 to 500
+				if( roll > 5500 ) roll = 5500;
+				if( roll < 500 ) roll = 500;
+
+				pitch = remote.Acceleration.Orientation.Pitch;
+				// pitch: -90 to 0
+				pitch = -pitch; // pitch: 90 to 0
+				pitch *= 20;   // pitch: 1800 to 0
+				pitch += 500;  // pitch: 2300 to 500
+				if( pitch > 2300 ) pitch = 2300;
+				if( pitch < 500 ) pitch = 500;
+
+			} else {
+				roll = 500;
+				pitch = 500;
 			}
-			
-			//A new struct to hold the time and controls
-			TimeControl tc;
-			tc.offset = get_timestamp() - starttime;
-			tc.throttle = (unsigned int)throttle;
-			tc.steering = (unsigned int)steering;
 
 			//Pass through current controls
-			servos.set_position_abs(0, tc.steering);
-			servos.set_position_abs(1, tc.throttle);
+			servos.set_position_abs(0, roll);
+			servos.set_position_abs(1, pitch);
 
-			//Store current controls
-			time_controls.push_back(tc);
-
-			printf("STORE throttle %.5d\tsteering %.5d\r\n", (int)throttle, (int)steering);
+			printf("throttle %.5d\tsteering %.5d\r\n", pitch, roll);
 			sleep(50);
-
-
-		} else {
-			//Replay previous stored sequence
-
-			//Iterator for the list of TimeControls
-			vector<TimeControl>::iterator tc_it;
-			
-			//Wait a second before starting
-			sleep(1000);
-			
-			//Take the current time, for offsets
-			starttime = get_timestamp();
-			
-			//Run through the control list
-			for( tc_it = time_controls.begin(); tc_it < time_controls.end(); tc_it++ ) {
-				//If the mode switch changes position, stop quickly
-				if( receiver.modeselect() < 50000 ) break;
-				
-				//Take the current struct
-				TimeControl current_tc = *tc_it;
-
-				//Wait for it to be the right time
-				while( get_timestamp() - starttime < current_tc.offset );
-
-				//Set the servos
-				servos.set_position_abs(0, current_tc.steering);
-				servos.set_position_abs(1, current_tc.throttle);
-
-				printf("SEND throttle %.5d\tsteering %.5d\r\n", current_tc.throttle, current_tc.steering);
-			}
-
-			starttime = 0;
-			time_controls.clear();
-		}
 
 	}
 	
