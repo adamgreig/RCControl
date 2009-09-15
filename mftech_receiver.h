@@ -14,6 +14,7 @@
 class MFTechReceiver {
 public:
 	MFTechReceiver(void);
+	bool joystick_available();
 	int throttle();
 	int steering();
 	int modeselect();

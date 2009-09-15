@@ -12,6 +12,8 @@ class SerialPort {
         ~SerialPort();
         int send_data(char* data, unsigned int size);
 		int read_line(char* buffer, unsigned int size);
+		bool connected();
     private:
         HANDLE serial_port;
+		bool _connected;
 };

@@ -1,10 +1,15 @@
 #include "pololu_servo_controller.h"
 
 /**
-* Initialise the servo controller. Currently does nothing.
+* Initialise the servo controller.
 */
 PololuServoController::PololuServoController() {
 	serial = new SerialPort(POLOLU_PORT, 9600);
+	_connected = serial->connected();
+}
+
+bool PololuServoController::connected() {
+	return _connected;
 }
 
 /**

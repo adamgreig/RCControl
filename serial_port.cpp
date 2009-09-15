@@ -16,8 +16,11 @@ SerialPort::SerialPort(char* port, int baud) {
     if( serial_port == INVALID_HANDLE_VALUE ) {
 		DWORD err = GetLastError();
 		cout << "Error opening serial port. Error " << err << endl;
-		exit(err);
-    }
+		_connected = false;
+		return;
+	} else {
+		_connected = true;
+	}
 
     //Set timeouts (mostly, don't time out)
     COMMTIMEOUTS timeouts = {0};
@@ -44,7 +47,7 @@ SerialPort::SerialPort(char* port, int baud) {
 		cout << "Error setting comm state. Error " << err << endl;
 		exit(err);
 	}
-	cout << "Serial port '" << port << "' opened successfully.\n" << endl;
+	cout << "Serial port '" << port << "' opened successfully.";
 	return;
 }
 
@@ -55,13 +58,17 @@ SerialPort::~SerialPort() {
     CloseHandle(serial_port);
 }
 
+bool SerialPort::connected() {
+	return _connected;
+}
+
 /**
 * Send data over the open serial port.
 * \param data A char array of data to send. Not null-terminated.
 * \param size The number of bytes to send from data.
 */
 int SerialPort::send_data(char* data, unsigned int size) {
-	if( !serial_port ) {
+	if( !serial_port || !_connected ) {
 		cout << "Error: Serial port not open." << endl;
 		return -1;
 	}
@@ -83,7 +90,7 @@ int SerialPort::send_data(char* data, unsigned int size) {
 * \param size The maximum number of bytes to read.
 */
 int SerialPort::read_line(char *buffer, unsigned int size) {
-	if( !serial_port ) {
+	if( !serial_port || !_connected ) {
 		cout << "Error: Serial port not open." << endl;
 		return -1;
 	}
@@ -105,23 +112,14 @@ int SerialPort::read_line(char *buffer, unsigned int size) {
 			total_read++;
 		}
         
-		//For some reason the end of line is not consistently signalled
-		// with \r\n. Instead sometimes \r\r, \n\r, \n\n is seen.
-		// Therefore, just watch out for two of these control characters
-		// before returning.
-        if( data[0] == '\n' || data[0] == '\r' ) {
-            total_read--;
-            if( end_of_line ) {
-                buffer[i - 1] = 0x00;
-                return (int)total_read;
-            } else {
-                end_of_line = true;
-            }
+        if( data[0] == '\n' && buffer[i - 1] == '\r' ) {
+            buffer[i - 1] = 0x00;
+            return (int)total_read;
         } else {
             end_of_line = false;
             buffer[i] = data[0];
         }
         
 	}
-	return total_read;
+	return (int)total_read;
 }

@@ -61,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="winmm.lib"
+				AdditionalDependencies="winmm.lib cv.lib cxcore.lib highgui.lib cvaux.lib cvcam.lib opengl32.lib glu32.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="C:\WinDDK\7600.16385.0\lib\wxp\i386"
 				GenerateDebugInformation="true"
@@ -137,7 +137,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="winmm.lib"
+				AdditionalDependencies="winmm.lib cv.lib cxcore.lib highgui.lib cvaux.lib cvcam.lib opengl32.lib glu32.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="C:\WinDDK\7600.16385.0\lib\wxp\i386"
 				GenerateDebugInformation="true"
@@ -181,11 +181,19 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\camera.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\file_logger.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\gps_receiver.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\gui.cpp"
 				>
 			</File>
 			<File
@@ -212,6 +220,10 @@
 				RelativePath=".\wiimote.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\wiimote_thread.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -219,11 +231,19 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\camera.h"
+				>
+			</File>
+			<File
 				RelativePath=".\file_logger.h"
 				>
 			</File>
 			<File
 				RelativePath=".\gps_receiver.h"
+				>
+			</File>
+			<File
+				RelativePath=".\gui.h"
 				>
 			</File>
 			<File
@@ -252,6 +272,10 @@
 			</File>
 			<File
 				RelativePath=".\wiimote_state.h"
+				>
+			</File>
+			<File
+				RelativePath=".\wiimote_thread.h"
 				>
 			</File>
 		</Filter>

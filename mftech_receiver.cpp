@@ -1,12 +1,21 @@
 #include "mftech_receiver.h"
 
-/**
-* On Linux, open the joystick file handler.
-*/
 MFTechReceiver::MFTechReceiver(void) {
 
 }
 
+/**
+* Try to see if a joystick is available for reading
+*/
+bool MFTechReceiver::joystick_available() {
+	JOYINFOEX joyInfoEx;
+	ZeroMemory(&joyInfoEx, sizeof(joyInfoEx));
+	joyInfoEx.dwSize = sizeof(joyInfoEx);
+	if( joyGetPosEx(JOYSTICKID1, &joyInfoEx) == JOYERR_NOERROR )
+		return true;
+	else
+		return false;
+}
 
 /**
 * Return the current throttle position.

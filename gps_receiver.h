@@ -37,7 +37,9 @@ struct GPSpos {
 class GPSReceiver {
 public:
 	GPSReceiver(void);
+	~GPSReceiver(void);
 	void update();
+	bool connected();
 	
 	GPStime get_time();
 	GPSpos get_pos();
@@ -56,4 +58,13 @@ private:
 	double speed_knots;
 	double track_angle;
 
+	HANDLE _updateMutex;
+	uintptr_t _thread;
+
+	bool _connected;
+
+	friend void gps_thread(void* void_gps_receiver);
+
 };
+
+void gps_thread(void* void_gps_receiver);

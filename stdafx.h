@@ -5,11 +5,14 @@
 #pragma once
 
 #define WIN32_LEAN_AND_MEAN		// Exclude rarely-used stuff from Windows headers
+
 #include <tchar.h>
 #include <windows.h>
-#define sleep(x) Sleep(x)
-
+#include <process.h>
 #include <stdio.h>
 #include <stdlib.h>
+
 #include <iostream>
+#include <ctime>
+
 using namespace std;

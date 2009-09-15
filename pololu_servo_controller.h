@@ -12,6 +12,8 @@ class PololuServoController {
     public:
         PololuServoController();
 		~PololuServoController();
+
+		bool connected();
         
         void config(unsigned short int servo, bool on=false, bool direction=false, unsigned short int range=15);
         void set_speed(unsigned short int servo, unsigned short int speed=0);
@@ -21,4 +23,5 @@ class PololuServoController {
         void set_position_abs(unsigned short int servo, unsigned short int position);
     private:
         SerialPort* serial;
+		bool _connected;
 };
