@@ -5,7 +5,6 @@
 * \param filename The file to write the log to.
 */
 FileLogger::FileLogger(char* filename) {
-	#if WINDOWS
 	file = CreateFile((LPCSTR)filename, GENERIC_WRITE, FILE_SHARE_WRITE, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 	if( file == INVALID_HANDLE_VALUE ) {
 		file = NULL;
@@ -13,15 +12,6 @@ FileLogger::FileLogger(char* filename) {
 		cout << "Error " << err << " opening file for logging." << endl;
 		return;
 	}
-	#elif LINUX
-	file = open(filename, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP);
-	if( file == -1 ) {
-		cout << "Error opening file." << endl;
-		file = NULL;
-		return;
-	}
-	cout << "Log file opened." << endl;
-	#endif
 
 }
 
@@ -29,11 +19,7 @@ FileLogger::FileLogger(char* filename) {
 * Close the file handler on destruction.
 */
 FileLogger::~FileLogger() {
-	#if WINDOWS
 	CloseHandle(file);
-	#elif LINUX
-	close(file);
-	#endif
 }
 
 /**
@@ -46,27 +32,15 @@ void FileLogger::log(char *data) {
 		return;
 	}
 	char time[32];
-	#if WINDOWS
 	sprintf_s(time, "%d", (int)clock());
-	#elif LINUX
-	sprintf(time, "%d", (int)clock());
-	#endif
 	char buf[293];
 	char tab[2] = "\t";
 	char newline[3] = "\r\n";
 	memset(&buf, NULL, 256);
-	#if WINDOWS
 	strcpy_s(buf, time);
 	strcat_s(buf, tab);
 	strcat_s(buf, data);
 	strcat_s(buf, newline);
 	DWORD written;
 	WriteFile(file, buf, (DWORD)strlen(buf), &written, NULL);
-	#elif LINUX
-	strcpy(buf, time);
-	strcat(buf, tab);
-	strcat(buf, data);
-	strcat(buf, newline);
-	write(file, &buf, strlen(buf));
-	#endif
 }

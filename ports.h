@@ -3,10 +3,5 @@
 */
 #pragma once
 
-#if WINDOWS
 #define POLOLU_PORT "COM8"
 #define GPS_PORT "COM1"
-#elif LINUX
-#define POLOLU_PORT "/dev/ttyUSB0"
-#define GPS_PORT "/dev/ttyUSB1"
-#endif

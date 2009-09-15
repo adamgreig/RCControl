@@ -9,7 +9,6 @@
 * is restricted to a specific range of common values.
 */
 SerialPort::SerialPort(char* port, int baud) {
-    #if WINDOWS
     //Open the serial port
     serial_port = CreateFile((LPCSTR)port, GENERIC_READ|GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, NULL);
 
@@ -45,56 +44,6 @@ SerialPort::SerialPort(char* port, int baud) {
 		cout << "Error setting comm state. Error " << err << endl;
 		exit(err);
 	}
-
-    #elif LINUX
-
-    //Open the serial port
-    serial_port = open(port, O_RDWR | O_NOCTTY | O_NDELAY);
-    if( serial_port == -1 ) {
-		cout << "Error opening serial port." << endl;
-        exit(1);
-    }
-
-	//Initialise the port
-    int serial_port_set = fcntl(serial_port, F_SETFL, 0);
-	if( serial_port_set == -1 ) {
-		cout << "Error initialising serial port." << endl;
-		exit(1);
-	}
-	
-	//Linux requires baudrates be given as a constant
-	speed_t baudrate = B4800;
-	if( baud == 9600 ) baudrate = B9600;
-	else if( baud == 19200 ) baudrate = B19200;
-	else if( baud == 38400 ) baudrate = B38400;
-	else if( baud == 57600 ) baudrate = B57600;
-	else if( baud == 115200 ) baudrate = B115200;
-	else if( baud == 230400 ) baudrate = B230400;
-
-	//Set all the weird arcane settings Linux demands (boils down to 8N1)
-    struct termios port_settings;
-    cfsetispeed(&port_settings, baudrate);
-    cfsetospeed(&port_settings, baudrate);
-    port_settings.c_cflag &= ~PARENB;
-    port_settings.c_cflag &= ~CSTOPB;
-    port_settings.c_cflag &= ~CSIZE;
-    port_settings.c_cflag |= CS8;
-    port_settings.c_cflag &= ~CRTSCTS;
-    port_settings.c_cflag |= CREAD | CLOCAL;
-    port_settings.c_iflag &= ~( IXON | IXOFF | IXANY );
-    port_settings.c_lflag &= ~( ICANON | ECHO | ECHOE | ISIG );
-    port_settings.c_oflag &= ~OPOST;
-    port_settings.c_cc[VMIN] = 0;
-    port_settings.c_cc[VTIME] = 20;
-	
-	//Apply settings
-    serial_port_set = tcsetattr(serial_port, TCSANOW, &port_settings);
-	if( serial_port_set == -1 ) {
-		cout << ("Error configuring serial port." << endl;
-		exit(1);
-	}
-
-    #endif
 	cout << "Serial port '" << port << "' opened successfully.\n" << endl;
 	return;
 }
@@ -103,11 +52,7 @@ SerialPort::SerialPort(char* port, int baud) {
 * Close the serial port handler.
 */
 SerialPort::~SerialPort() {
-    #if WINDOWS
     CloseHandle(serial_port);
-    #elif LINUX
-    close(serial_port);
-    #endif
 }
 
 /**
@@ -120,7 +65,7 @@ int SerialPort::send_data(char* data, unsigned int size) {
 		cout << "Error: Serial port not open." << endl;
 		return -1;
 	}
-    #if WINDOWS
+
 	DWORD written;
 	if( !WriteFile(serial_port, data, (DWORD)size, &written, NULL) ) {
 		cout << "Error writing to the serial port." << endl;
@@ -128,15 +73,6 @@ int SerialPort::send_data(char* data, unsigned int size) {
 	} else {
 		return written;
 	}
-    #elif LINUX
-	int written = write(serial_port, data, size);
-	if(written == -1) {
-		printf("Error writing to serial port.\n");
-		return -1;
-	} else {
-		return written;
-	}
-    #endif
 
     return 0;
 }
@@ -157,14 +93,9 @@ int SerialPort::read_line(char *buffer, unsigned int size) {
 	char data[1];
     bool end_of_line = false;
 
-	#if WINDOWS
 	DWORD data_read;
-	#elif LINUX
-	int data_read;
-	#endif
 	
 	for( i=0; i<size; i++ ) {
-		#if WINDOWS
 		if( !ReadFile(serial_port, (LPVOID)data, 1, &data_read, NULL) ) {
 			cout <<"Error reading from serial port." << endl;
 			return -1;
@@ -173,17 +104,6 @@ int SerialPort::read_line(char *buffer, unsigned int size) {
 		} else {
 			total_read++;
 		}
-		#elif LINUX
-		data_read = read(serial_port, data, 1);
-		if( data_read == -1 ) {
-			cout << "Error reading from serial port." << endl;
-			return -1;
-		} else if( data_read == 0 ) {
-			return 0;
-		} else {
-			total_read++;
-		}
-		#endif
         
 		//For some reason the end of line is not consistently signalled
 		// with \r\n. Instead sometimes \r\r, \n\r, \n\n is seen.

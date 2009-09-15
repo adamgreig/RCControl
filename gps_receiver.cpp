@@ -1,12 +1,5 @@
 #include "gps_receiver.h"
 
-#if LINUX
-//Linux doesn't have the _s functions so fake them when compiling for Linux.
-char * strncpy_s( char* dest, size_t size, const char* source, size_t num ) {
-	return strncpy( dest, source, num );
-}
-#endif
-
 /**
 * Initialise the serial port used to talk to the GPS unit.
 */
@@ -92,11 +85,7 @@ void GPSReceiver::update() {
         
 		//Store the new checksum as two hex characters
 		char calc_checksum_str[3];
-		#if WINDOWS
 		sprintf_s(calc_checksum_str, 3, "%.2X", calc_checksum);
-		#elif LINUX
-		sprintf(calc_checksum_str, "%.2X", calc_checksum);
-		#endif
 		//Compare the two
 		if( strncmp( msg_checksum, calc_checksum_str, 2 ) != 0 ) {
 			cout << "Checksum incorrect, skipping line." << endl;

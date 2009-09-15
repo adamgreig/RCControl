@@ -13,9 +13,5 @@ class SerialPort {
         int send_data(char* data, unsigned int size);
 		int read_line(char* buffer, unsigned int size);
     private:
-        #if WINDOWS
         HANDLE serial_port;
-        #elif LINUX
-        int serial_port;
-        #endif
 };

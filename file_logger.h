@@ -14,9 +14,5 @@ public:
 	~FileLogger();
 	void log(char* data);
 private:
-	#if WINDOWS
-		HANDLE file;
-	#elif LINUX
-		int file;
-	#endif
+	HANDLE file;
 };
