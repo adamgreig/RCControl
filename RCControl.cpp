@@ -87,13 +87,6 @@ int _tmain(int argc, _TCHAR* argv[]) {
 		}
 		if( camera.connected() ) {
 			gui.set_camera(true);
-			char imagePath[128] = "";
-			sprintf_s( imagePath, "C:/video/%.10d.jpg", the_time );
-			cout << "Camera: Saving image '" << imagePath << "'" << endl;
-			IplImage* frame = camera.get_frame();
-			if( frame ) {
-				//cvSaveImage( imagePath, frame );
-			}
 		} else {
 			cout << "No camera found" << endl;
 		}

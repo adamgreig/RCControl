@@ -19,6 +19,7 @@ class Camera {
 	private:
 		IplImage* _frame;
 		CvCapture* capture;
+		CvVideoWriter* writer;
 		HANDLE _updateMutex;
 		HANDLE _runningMutex;
 		uintptr_t _thread;

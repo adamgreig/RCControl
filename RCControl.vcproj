@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="C:\WinDDK\7600.16385.0\inc\api;C:\WinDDK\7600.16385.0\inc\ddk"
+				AdditionalIncludeDirectories="C:\Downloads\opencv\build\include\opencv;C:\WinDDK\7600.16385.0\inc\api;C:\WinDDK\7600.16385.0\inc\ddk"
 				PreprocessorDefinitions="WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -61,9 +61,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="winmm.lib cv.lib cxcore.lib highgui.lib cvaux.lib cvcam.lib opengl32.lib glu32.lib"
+				AdditionalDependencies="winmm.lib cv120.lib cxcore120.lib highgui120.lib cvaux120.lib opengl32.lib glu32.lib glut32.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="C:\WinDDK\7600.16385.0\lib\wxp\i386"
+				AdditionalLibraryDirectories="C:\Downloads\opencv\build\lib\release;C:\WinDDK\7600.16385.0\lib\wxp\i386"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
@@ -118,7 +118,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="C:\WinDDK\7600.16385.0\inc\api;C:\WinDDK\7600.16385.0\inc\ddk"
+				AdditionalIncludeDirectories="C:\Downloads\opencv\build\include\opencv;C:\WinDDK\7600.16385.0\inc\api;C:\WinDDK\7600.16385.0\inc\ddk"
 				PreprocessorDefinitions="WINDOWS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -137,9 +137,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="winmm.lib cv.lib cxcore.lib highgui.lib cvaux.lib cvcam.lib opengl32.lib glu32.lib"
+				AdditionalDependencies="winmm.lib cv120.lib cxcore120.lib highgui120.lib cvaux120.lib opengl32.lib glu32.lib glut32.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="C:\WinDDK\7600.16385.0\lib\wxp\i386"
+				AdditionalLibraryDirectories="C:\Downloads\opencv\build\lib\release;C:\WinDDK\7600.16385.0\lib\wxp\i386"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"

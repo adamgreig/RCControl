@@ -7,6 +7,7 @@ Camera::Camera() {
 	_updateMutex = CreateMutex(NULL, FALSE, NULL);
 	_runningMutex = CreateMutex(NULL, TRUE, NULL);
 	_connected = false;
+	_frame = NULL;
 	this->_thread = _beginthread(camera_thread, 0, this);
 
 	if( !this->_thread ) {
@@ -42,12 +43,13 @@ IplImage* Camera::get_frame() {
 void camera_thread(void* void_camera) {
 	Camera* camera = (Camera*)void_camera;
 	HANDLE runningMutex = camera->_runningMutex;
+	CvCapture *capture;
+	capture = cvCaptureFromCAM( 0 );
 
-	camera->capture = 0;
-	camera->capture = cvCaptureFromCAM( 0 );
-
-	if(camera->capture == 0x00)
+	if(capture == 0x00)
 		return;
+
+	camera->writer = cvCreateVideoWriter("C:/video/rccontrol.mpeg", CV_FOURCC('P', 'I', 'M', '1'), 24, cvSize(320,240));
 
 	int frameNo = 0;
 
@@ -58,14 +60,18 @@ void camera_thread(void* void_camera) {
 	for(;;) {
 		if( WaitForSingleObject(runningMutex, 0) == WAIT_TIMEOUT ) {
 			static IplImage *frame = NULL;
-			cvGrabFrame(camera->capture);
-			frame = cvRetrieveFrame( camera->capture );
-			WaitForSingleObject(camera->_updateMutex, INFINITE);
-			camera->_frame = frame;
-			ReleaseMutex(camera->_updateMutex);
+			cvGrabFrame(capture);
+			frame = cvRetrieveFrame( capture );
+			if(frame != NULL) {
+				cvWriteFrame(camera->writer, frame);
+				WaitForSingleObject(camera->_updateMutex, INFINITE);
+				camera->_frame = frame;
+				ReleaseMutex(camera->_updateMutex);
+			}
 			Sleep(20);
 		} else {
-			cvReleaseCapture(&camera->capture);
+			cvReleaseCapture(&capture);
+			cvReleaseVideoWriter(&camera->writer);
 			camera->_connected = false;
 			_endthread();
 		}
